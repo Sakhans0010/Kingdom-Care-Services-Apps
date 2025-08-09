@@ -1,5 +1,8 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:kingdom_care_services_app/app_utils/constants.dart';
 
 class AvailabilityScheduler extends StatefulWidget {
   const AvailabilityScheduler({super.key});
@@ -45,48 +48,117 @@ class _AvailabilitySchedulerState extends State<AvailabilityScheduler> {
     String dateKey = DateFormat('yyyy-MM-dd').format(date);
     String? selectedTime = availability[dateKey];
 
-    return Row(
+    Widget buildCircleOption(String value, String label) {
+      bool isSelected = selectedTime == value;
+      return GestureDetector(
+        onTap: () {
+          setState(() {
+            availability[dateKey] = value;
+          });
+        },
+        child: Container(
+          width: 40,
+          height: 40,
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+            color: isSelected ? AppColors.primaryColor : Colors.white,
+            shape: BoxShape.circle,
+
+            border: Border.all(
+              color: isSelected ? AppColors.primaryColor : Colors.grey,
+              width: 2,
+            ),
+          ),
+          child: Text(
+            label,
+            style: TextStyle(
+              color: isSelected ? Colors.white : Colors.black,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+      );
+    }
+
+    return Column(
       children: [
-        Expanded(child: Text(DateFormat('dd MMM').format(date))),
-        Expanded(
-          child: RadioListTile<String>(
-            value: 'Morning',
-            groupValue: selectedTime,
-            title: const Text(''),
-            onChanged: (value) {
-              setState(() {
-                availability[dateKey] = value!;
-              });
-            },
-          ),
+        Row(
+          children: [
+            Expanded(flex: 3, child: Text(DateFormat('dd MMM').format(date))),
+            Expanded(
+              flex: 5,
+              child: Padding(
+                padding: const EdgeInsets.only(right: 15),
+                child: buildCircleOption('Morning', 'M'),
+              ),
+            ),
+            Expanded(
+              flex: 5,
+
+              child: Padding(
+                padding: const EdgeInsets.only(right: 15),
+
+                child: buildCircleOption('Evening', 'E'),
+              ),
+            ),
+            Expanded(flex: 5, child: buildCircleOption('U/A', 'U')),
+          ],
         ),
-        Expanded(
-          child: RadioListTile<String>(
-            value: 'Evening',
-            groupValue: selectedTime,
-            title: const Text(''),
-            onChanged: (value) {
-              setState(() {
-                availability[dateKey] = value!;
-              });
-            },
-          ),
-        ),
-        Expanded(
-          child: RadioListTile<String>(
-            value: 'U/A',
-            groupValue: selectedTime,
-            title: const Text(''),
-            onChanged: (value) {
-              setState(() {
-                availability[dateKey] = value!;
-              });
-            },
-          ),
-        ),
+        SizedBox(height: 10),
+        Divider(height: 1, thickness: 0.5, color: Colors.grey[300]),
       ],
     );
   }
+
+  // Widget buildAvailabilityRow(DateTime date) {
+  //   String dateKey = DateFormat('yyyy-MM-dd').format(date);
+  //   String? selectedTime = availability[dateKey];
+
+  //   return Row(
+  //     children: [
+  //       Expanded(child: Text(DateFormat('dd MMM').format(date))),
+  //       Expanded(
+  //         child:
+
+  //         RadioListTile<String>(
+  //           value: 'Morning',
+  //           groupValue: selectedTime,
+  //           title: const Text(''),
+  //           onChanged: (value) {
+  //             log("Selected Morning for $dateKey: $value: $selectedTime");
+  //             setState(() {
+  //               availability[dateKey] = value!;
+  //             });
+  //           },
+  //         ),
+  //       ),
+  //       Expanded(
+  //         child: RadioListTile<String>(
+  //           value: 'Evening',
+  //           groupValue: selectedTime,
+  //           title: const Text(''),
+  //           onChanged: (value) {
+  //             setState(() {
+  //               availability[dateKey] = value!;
+  //             });
+  //           },
+  //         ),
+  //       ),
+  //       Expanded(
+  //         child: RadioListTile<String>(
+  //           value: 'U/A',
+  //           groupValue: selectedTime,
+  //           title: const Text(''),
+  //           onChanged: (value) {
+  //             setState(() {
+  //               availability[dateKey] = value!;
+  //             });
+  //           },
+  //         ),
+  //       ),
+  //     ],
+  //   );
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -94,15 +166,79 @@ class _AvailabilitySchedulerState extends State<AvailabilityScheduler> {
     final monthLabel = DateFormat('MMMM yyyy').format(currentMonth);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Availability Scheduler')),
-      body: Column(
+      // backgroundColor: AppColors.background,
+      // appBar: AppBar(
+      // backgroundColor: AppColors.background,
+      
+      //   elevation: 0,
+      //   centerTitle: false,
+      //   foregroundColor: Colors.black,
+
+      //   title: Text(
+      //     "Availability Scheduler",
+      //     style: Theme.of(context).textTheme.titleMedium,
+      //   ),
+      // ),
+      body: SafeArea(
+        child: Column(
+          children: [
+            
+            _buildUpperSection(monthLabel),
+            SizedBox(height: 10),
+            Expanded(
+              child: ListView.builder(
+                itemCount: dates.length,
+                padding: EdgeInsets.only(left: 15),
+                itemBuilder: (context, index) => Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 6),
+                  child: buildAvailabilityRow(dates[index]),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Container _buildUpperSection(String monthLabel) {
+    return Container(
+      padding: EdgeInsets.only(bottom: 20),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(5),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withValues(alpha: 0.16),
+            spreadRadius: 1,
+            blurRadius: 10,
+            offset: const Offset(0, 10), // changes position of shadow
+          ),
+        ],
+      ),
+      child: Column(
         children: [
+          Row(
+            children: [
+              IconButton(
+                icon: const Icon(Icons.arrow_back_ios_new),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              ),
+              const SizedBox(width: 10),
+              Text(
+              "Availability Scheduler",
+              style: Theme.of(context).textTheme.titleMedium,
+                      ),
+            ],
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               IconButton(
-                splashColor: isCurrentMonth ?  Colors.transparent : null,
-                highlightColor: isCurrentMonth ?  Colors.transparent : null,
+                splashColor: isCurrentMonth ? Colors.transparent : null,
+                highlightColor: isCurrentMonth ? Colors.transparent : null,
                 icon: Icon(
                   Icons.arrow_back,
                   color: isCurrentMonth ? Colors.grey : Colors.black,
@@ -122,30 +258,37 @@ class _AvailabilitySchedulerState extends State<AvailabilityScheduler> {
               ),
             ],
           ),
-          const Divider(),
+          SizedBox(height: 10),
           Padding(
             padding: EdgeInsets.only(left: 15),
             child: const Row(
               children: [
                 Expanded(
+                  flex: 4,
+
                   child: Text(
                     'Date',
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                 ),
                 Expanded(
+                  flex: 6,
                   child: Text(
                     'Morning',
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                 ),
                 Expanded(
+                  flex: 5,
+
                   child: Text(
                     'Evening',
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                 ),
                 Expanded(
+                  flex: 6,
+
                   child: Align(
                     // alignment: Alignment.center,
                     child: Text(
@@ -155,15 +298,6 @@ class _AvailabilitySchedulerState extends State<AvailabilityScheduler> {
                   ),
                 ),
               ],
-            ),
-          ),
-          const Divider(),
-          Expanded(
-            child: ListView.builder(
-              itemCount: dates.length,
-              padding: EdgeInsets.only(left: 15),
-              itemBuilder: (context, index) =>
-                  buildAvailabilityRow(dates[index]),
             ),
           ),
         ],
