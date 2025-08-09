@@ -1,142 +1,81 @@
-// import 'package:flutter/material.dart';
-// // import 'package:intl/intl.dart';
+import 'package:flutter/material.dart';
+import 'package:kingdom_care_services_app/app_utils/app_images.dart';
+import 'package:kingdom_care_services_app/app_utils/constants.dart';
+import 'package:kingdom_care_services_app/models/shift.dart';
+import 'package:kingdom_care_services_app/modules/chats/views/chats.dart';
+import 'package:kingdom_care_services_app/modules/home/widgets/date_timeline.dart';
+import 'package:kingdom_care_services_app/modules/shifts/widgets/available_shifts.dart';
+import 'package:kingdom_care_services_app/modules/shifts/widgets/completed_shifts.dart';
+import 'package:kingdom_care_services_app/modules/shifts/widgets/shift_item_widget.dart';
+import 'package:kingdom_care_services_app/modules/shifts/widgets/upcoming_shifts.dart';
+import 'package:kingdom_care_services_app/widgets/title_section_row.dart';
 
-// class ShiftViewerScreen extends StatefulWidget {
-//   final Map<String, String> availability;
+class ShiftsScreen extends StatefulWidget {
+  const ShiftsScreen({super.key});
 
-//   const ShiftViewerScreen({super.key, required this.availability});
+  @override
+  State<ShiftsScreen> createState() => _ShiftsScreenState();
+}
 
-//   @override
-//   State<ShiftViewerScreen> createState() => _ShiftViewerScreenState();
-// }
+class _ShiftsScreenState extends State<ShiftsScreen>
+    with SingleTickerProviderStateMixin {
+  late TabController _tabController;
 
-// class _ShiftViewerScreenState extends State<ShiftViewerScreen> {
-//   DateTime currentMonth = DateTime.now();
-//   late List<DateTime> dates;
-//   int selectedIndex = 0;
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(length: 3, vsync: this);
+  }
 
-//   @override
-//   void initState() {
-//     super.initState();
-//     dates = _getDates(currentMonth);
-//   }
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
+  }
 
-//   List<DateTime> _getDates(DateTime month) {
-//     final first = DateTime(month.year, month.month, 1);
-//     final last = DateTime(month.year, month.month + 1, 0);
-//     return List.generate(
-//       last.day,
-//       (index) => DateTime(month.year, month.month, index + 1),
-//     );
-//   }
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
 
-//   void changeMonth(int offset) {
-//     setState(() {
-//       currentMonth = DateTime(currentMonth.year, currentMonth.month + offset);
-//       dates = _getDates(currentMonth);
-//       selectedIndex = 0;
-//     });
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     String selectedDateStr = DateFormat(
-//       'yyyy-MM-dd',
-//     ).format(dates[selectedIndex]);
-//     String? selectedShift = widget.availability[selectedDateStr];
-
-//     return Scaffold(
-//       appBar: AppBar(title: const Text('Available Shifts')),
-//       body: Column(
-//         children: [
-//           Row(
-//             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//             children: [
-//               IconButton(
-//                 icon: const Icon(Icons.arrow_back),
-//                 onPressed: () => changeMonth(-1),
-//               ),
-//               Text(
-//                 DateFormat('MMMM yyyy').format(currentMonth),
-//                 style: const TextStyle(
-//                   fontSize: 18,
-//                   fontWeight: FontWeight.bold,
-//                 ),
-//               ),
-//               IconButton(
-//                 icon: const Icon(Icons.arrow_forward),
-//                 onPressed: () => changeMonth(1),
-//               ),
-//             ],
-//           ),
-//           SizedBox(
-//             height: 60,
-//             child: ListView.builder(
-//               scrollDirection: Axis.horizontal,
-//               itemCount: dates.length,
-//               itemBuilder: (context, index) {
-//                 final date = dates[index];
-//                 final isSelected = index == selectedIndex;
-//                 return GestureDetector(
-//                   onTap: () => setState(() => selectedIndex = index),
-//                   child: Container(
-//                     padding: const EdgeInsets.symmetric(
-//                       horizontal: 10,
-//                       vertical: 10,
-//                     ),
-//                     margin: const EdgeInsets.symmetric(
-//                       horizontal: 5,
-//                       vertical: 5,
-//                     ),
-//                     decoration: BoxDecoration(
-//                       color: isSelected ? Colors.blue : Colors.grey[200],
-//                       borderRadius: BorderRadius.circular(8),
-//                     ),
-//                     child: Column(
-//                       mainAxisAlignment: MainAxisAlignment.center,
-//                       children: [
-//                         Text(
-//                           DateFormat('E').format(date),
-//                           style: TextStyle(
-//                             color: isSelected ? Colors.white : Colors.black,
-//                           ),
-//                         ),
-//                         Text(
-//                           '${date.day}',
-//                           style: TextStyle(
-//                             color: isSelected ? Colors.white : Colors.black,
-//                           ),
-//                         ),
-//                       ],
-//                     ),
-//                   ),
-//                 );
-//               },
-//             ),
-//           ),
-//           const SizedBox(height: 20),
-//           Text(
-//             selectedShift != null
-//                 ? 'Available Shift: $selectedShift'
-//                 : 'No shift available',
-//             style: const TextStyle(fontSize: 20),
-//           ),
-//           const SizedBox(height: 20),
-//           if (selectedShift != null)
-//             ElevatedButton(
-//               onPressed: () {
-//                 ScaffoldMessenger.of(context).showSnackBar(
-//                   SnackBar(
-//                     content: Text(
-//                       'Applied for $selectedShift shift on $selectedDateStr',
-//                     ),
-//                   ),
-//                 );
-//               },
-//               child: const Text('Apply for Shift'),
-//             ),
-//         ],
-//       ),
-//     );
-//   }
-// }
+      child: Column(
+        children: [
+          TitleSectionRow(title: "Shifts"),
+          SizedBox(height: 20),
+          SizedBox(
+            height: 50,
+            child: TabBar(
+              controller: _tabController,
+              labelColor: Colors.white, // text color for selected
+              unselectedLabelColor: Colors.black, // text color for unselected
+              indicatorSize: TabBarIndicatorSize.tab,
+              indicator: BoxDecoration(
+                color: AppColors.primaryColor,
+                borderRadius: BorderRadius.circular(100),
+              ),
+              dividerColor: Colors.transparent,
+              splashBorderRadius: BorderRadius.circular(100),
+              labelStyle: Theme.of(context).textTheme.bodyMedium,
+              tabs: [
+                Tab(text: "Available"),
+                Tab(text: "Upcoming"),
+                Tab(text: "Past"),
+              ],
+            ),
+          ),
+          SizedBox(height: 20),
+          Expanded(
+            child: TabBarView(
+              controller: _tabController,
+              children: [
+                AvailableShifts(),
+                UpcomingShifts(),
+                CompletedShifts(),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
