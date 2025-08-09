@@ -3,6 +3,8 @@ import 'package:intl/intl.dart';
 import 'package:kingdom_care_services_app/app_utils/constants.dart';
 
 class DateTimeline extends StatefulWidget {
+  final bool isHomeScreen;
+  const DateTimeline({super.key, this.isHomeScreen = false});
   @override
   _DateTimelineState createState() => _DateTimelineState();
 }
@@ -12,7 +14,28 @@ class _DateTimelineState extends State<DateTimeline> {
 
   List<DateTime> getDates() {
     DateTime today = DateTime.now();
-    return List.generate(7, (index) => today.add(Duration(days: index)));
+    if (widget.isHomeScreen) {
+      // Just next 7 days
+      return List.generate(7, (index) => today.add(Duration(days: index)));
+    } else {
+      // Dates from today to the end of next month
+      DateTime endOfNextMonth = DateTime(
+        today.year,
+        today.month + 2,
+        0,
+      ); // last day of next month
+      List<DateTime> allDates = [];
+
+      for (
+        DateTime date = today;
+        date.isBefore(endOfNextMonth.add(Duration(days: 1)));
+        date = date.add(Duration(days: 1))
+      ) {
+        allDates.add(date);
+      }
+
+      return allDates;
+    }
   }
 
   String getSingleLetterDay(DateTime date) {
@@ -25,6 +48,24 @@ class _DateTimelineState extends State<DateTimeline> {
 
     return SizedBox(
       height: 100,
+      child: widget.isHomeScreen
+          ? Row(
+              children: dates.map((date) => buildDateItem(date, true)).toList(),
+            )
+          : ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: dates.length,
+
+              itemBuilder: (context, index) {
+                return buildDateItem(dates[index], false);
+              },
+            ),
+    );
+    
+    
+    
+    SizedBox(
+      height: 100,
       child: Row(
         children: dates.map((date) {
           bool isSelected =
@@ -32,7 +73,7 @@ class _DateTimelineState extends State<DateTimeline> {
               selectedDate.month == date.month &&
               selectedDate.day == date.day;
 
-          return Expanded(
+          return  Expanded(
             child: GestureDetector(
               onTap: () {
                 setState(() {
@@ -79,5 +120,54 @@ class _DateTimelineState extends State<DateTimeline> {
         }).toList(),
       ),
     );
+  }
+
+  Widget buildDateItem(DateTime date, bool isExpanded) {
+    bool isSelected = selectedDate.year == date.year &&
+        selectedDate.month == date.month &&
+        selectedDate.day == date.day;
+
+    final content = GestureDetector(
+      onTap: () {
+        setState(() {
+          selectedDate = date;
+        });
+      },
+      child: Container(
+        margin:  EdgeInsets.symmetric(horizontal: widget.isHomeScreen ? 5 : 5),
+        padding: const EdgeInsets.symmetric(horizontal: 12),
+        width: widget.isHomeScreen ? 60 : 50,
+        decoration: BoxDecoration(
+          color: isSelected ? AppColors.primaryContainerColor : null,
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              getSingleLetterDay(date),
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.normal,
+                color: isSelected
+                    ? AppColors.primaryColor.withOpacity(0.6)
+                    : Colors.black.withOpacity(0.6),
+              ),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              date.day.toString(),
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.w700,
+                color: isSelected ? AppColors.primaryColor : Colors.black,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+
+    return isExpanded ? Expanded(child: content) : content;
   }
 }
