@@ -1,3 +1,5 @@
+// ignore_for_file: constant_identifier_names
+
 class AppImages {
   static const String BASE_PATH = "assets/";
   static const String IMAGE_PATH = "${BASE_PATH}images/";
@@ -13,4 +15,7 @@ class AppImages {
   static const String SETTING = "${ICON_PATH}setting.png";
   static const String LOGOUT = "${ICON_PATH}logout.png";
   static const String EDIT = "${ICON_PATH}edit.png";
+  static const String ROLE = "${ICON_PATH}role.png";
+  static const String NOTES = "${ICON_PATH}notes.png";
+  static const String LOCATION = "${ICON_PATH}location.png";
 }

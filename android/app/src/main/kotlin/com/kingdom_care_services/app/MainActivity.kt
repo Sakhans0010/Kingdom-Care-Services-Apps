@@ -1,4 +1,4 @@
-package com.example.kingdom_care_services_app
+package com.kingdom_care_services.app
 
 import io.flutter.embedding.android.FlutterActivity
 

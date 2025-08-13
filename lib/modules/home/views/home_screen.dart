@@ -25,15 +25,15 @@ class HomeScreen extends StatelessWidget {
               ProfileSectionWidget(),
               Spacer(),
               IconButton(
-            icon: Image.asset(
-              AppImages.NOTIFICATION_BELL,
-              width: 30,
-              height: 30,
-            ),
-            onPressed: () {
-              // Handle notifications action
-            },
-          ),
+                icon: Image.asset(
+                  AppImages.NOTIFICATION_BELL,
+                  width: 30,
+                  height: 30,
+                ),
+                onPressed: () {
+                  // Handle notifications action
+                },
+              ),
             ],
           ),
           SizedBox(height: 20),
@@ -63,9 +63,14 @@ class HomeScreen extends StatelessWidget {
             shift: ShiftItem(
               role: "Registered Nurse",
               title: "Shift at Woodford Hospital",
-              date: DateTime.now(),
-              time: "9:00 AM - 5:00 PM",
-              location: "39 Eve Road, Bristol, BS5 0JX",
+              startDateAndTime: DateTime.now(),
+              endDateAndTime: DateTime.now().add(Duration(hours: 8)),
+              notes: "Please arrive 15 minutes early.",
+              location: Location(
+                latitude: 51.4636868,
+                longitude: -2.5686716,
+                address: "29 Eve Road, Bristol, BS5 0JX",
+              ),
               ratePerHour: "£20/hr",
             ),
           ),
@@ -73,9 +78,14 @@ class HomeScreen extends StatelessWidget {
             shift: ShiftItem(
               role: "Registered Nurse",
               title: "Shift at Woodford Hospital",
-              date: DateTime.now(),
-              time: "9:00 AM - 5:00 PM",
-              location: "39 Eve Road, Bristol, BS5 0JX",
+              startDateAndTime: DateTime.now(),
+              endDateAndTime: DateTime.now().add(Duration(hours: 8)),
+              notes: "Please arrive 15 minutes early.",
+              location: Location(
+                latitude: 51.4636868,
+                longitude: -2.5686716,
+                address: "29 Eve Road, Bristol, BS5 0JX",
+              ),
               ratePerHour: "£20/hr",
             ),
           ),
