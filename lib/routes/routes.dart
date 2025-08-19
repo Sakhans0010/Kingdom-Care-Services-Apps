@@ -5,6 +5,7 @@ import 'package:kingdom_care_services_app/modules/availability_scheduler/views/a
 // import 'package:kingdom_care_services_app/modules/auth/views/signup_screen.dart';
 // import 'package:kingdom_care_services_app/modules/home/views/home_screen.dart';
 import 'package:kingdom_care_services_app/modules/route_decider/views/route_decider.dart';
+import 'package:kingdom_care_services_app/modules/shifts/views/map_details_screen.dart';
 import 'package:kingdom_care_services_app/modules/shifts/views/shift_details_screen.dart';
 
 class Routes {
@@ -13,6 +14,7 @@ class Routes {
   static const String home = "home";
   static const String availabilityScheduler = "availabilityScheduler";
   static const String shiftDetailsScreen = "shiftDetailsScreen";
+  static const String mapDetailsScreen = "mapDetailsScreen";
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     final args = settings.arguments;
@@ -28,6 +30,11 @@ class Routes {
       case shiftDetailsScreen:
           var data = settings.arguments as ShiftItem;
         return MaterialPageRoute(builder: (_) => ShiftDetailsScreen(
+          shift: data,
+        ));
+      case mapDetailsScreen:
+          var data = settings.arguments as ShiftItem;
+        return MaterialPageRoute(builder: (_) => MapDetailsScreen(
           shift: data,
         ));
         
