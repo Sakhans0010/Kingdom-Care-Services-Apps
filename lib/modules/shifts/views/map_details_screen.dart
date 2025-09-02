@@ -27,6 +27,7 @@ class _MapDetailsScreenState extends State<MapDetailsScreen> {
               zoom: 16,
             ),
             mapType: MapType.normal,
+
             // zoomGesturesEnabled: true,
             // scrollGesturesEnabled: true,
             // rotateGesturesEnabled: true,
@@ -34,11 +35,7 @@ class _MapDetailsScreenState extends State<MapDetailsScreen> {
             // myLocationButtonEnabled: true, // hide default
             // myLocationEnabled: true,
             // zoomControlsEnabled: true,
-
-            padding: EdgeInsets.symmetric(
-              vertical: 25,
-              horizontal: 15,
-            ),
+            padding: EdgeInsets.symmetric(vertical: 25, horizontal: 15),
             markers: {
               Marker(
                 markerId: const MarkerId('shiftLocation'),
@@ -59,6 +56,7 @@ class _MapDetailsScreenState extends State<MapDetailsScreen> {
           // Custom zoom buttons
           // Positioned(
           //   bottom: 40,
+
           //   right: 20,
           //   child: Column(
           //     children: [
