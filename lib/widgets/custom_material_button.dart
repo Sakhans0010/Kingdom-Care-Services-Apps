@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kingdom_care_services_app/app_utils/constants.dart';
+import 'package:kingdom_care_services_app/constants/constants.dart';
 
 class CustomMaterialButton extends StatelessWidget {
   const CustomMaterialButton({
@@ -35,10 +35,9 @@ class CustomMaterialButton extends StatelessWidget {
       child: MaterialButton(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8),
-          side:
-              !isBordered
-                  ? BorderSide.none
-                  : BorderSide(color: color ?? primaryColor, width: 1.5),
+          side: !isBordered
+              ? BorderSide.none
+              : BorderSide(color: color ?? primaryColor, width: 1.5),
         ),
         elevation: isBordered ? 0 : 3,
         textColor: isBordered ? primaryColor : textColor ?? whiteColor,

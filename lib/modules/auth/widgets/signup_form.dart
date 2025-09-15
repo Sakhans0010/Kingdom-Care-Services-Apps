@@ -1,34 +1,155 @@
+import 'dart:developer';
+
+import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:intl/intl.dart';
+import 'package:kingdom_care_services_app/constants/api_response_messages.dart';
+import 'package:kingdom_care_services_app/modules/auth/providers/auth_provider.dart';
+import 'package:kingdom_care_services_app/routes/routes.dart';
 // import 'package:form_validator/form_validator.dart';
 import 'package:kingdom_care_services_app/widgets/custom_material_button.dart';
 import 'package:kingdom_care_services_app/widgets/custom_text_form_field.dart';
-import 'package:kingdom_care_services_app/widgets/lowercase_formatter.dart';
 
 import 'signUp_or_signIn_button.dart';
 
-class SignupForm extends StatefulWidget {
+class SignupForm extends ConsumerStatefulWidget {
   const SignupForm({super.key});
 
   @override
-  State<SignupForm> createState() => _SignupFormState();
+  ConsumerState<SignupForm> createState() => _SignupFormState();
 }
 
-class _SignupFormState extends State<SignupForm> {
+class _SignupFormState extends ConsumerState<SignupForm> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
-  TextEditingController confirmPasswordController = TextEditingController();
+  // Controllers
+  final TextEditingController firstNameController = TextEditingController();
+  final TextEditingController lastNameController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController phoneController = TextEditingController();
+  final TextEditingController dobController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController confirmPasswordController =
+      TextEditingController();
+
+  Map<String, String> selectedCountry = {
+    'code': '+44',
+    'countryCode': 'GB',
+    'name': 'United Kingdom',
+  }; // Default country code (UK)
 
   var isVisible = false;
 
+  // Submit SignUp Form
+  void _submitSignupForm() async {
+    try {
+      // Hide the keyboard
+      FocusScope.of(context).unfocus();
+
+      // Validate form
+      if (!_formKey.currentState!.validate()) return;
+
+      String selectedCountryCode = selectedCountry['code']!;
+
+      // Show loading
+      EasyLoading.show();
+
+      // Call signup through Riverpod notifier
+      final response = await ref
+          .read(authProvider.notifier)
+          .signup(
+            firstName: firstNameController.text.trim(),
+            lastName: lastNameController.text.trim(),
+            email: emailController.text.trim(),
+            password: passwordController.text.trim(),
+            dateOfBirth: dobController.text.trim(),
+            phone: phoneController.text.trim(),
+            countryCode: selectedCountryCode,
+          );
+
+      // Dismiss loading
+      EasyLoading.dismiss();
+
+      // ✅ Ensure widget is still mounted before using context
+      if (!mounted) return;
+
+      // Show success or error message
+      Fluttertoast.showToast(
+        msg: response.isSuccess
+            ? response.message ?? ApiResponseMessages.signedUpSuccessfully
+            : response.error ?? ApiResponseMessages.somethingWentWrong,
+
+        backgroundColor: response.isSuccess
+            ? null
+            : Theme.of(context).colorScheme.error,
+      );
+
+      // Navigate on success
+      if (response.isSuccess) {
+        Navigator.pushReplacementNamed(context, Routes.mainScreen);
+      }
+    } catch (e, st) {
+      // Dismiss loading
+      EasyLoading.dismiss();
+
+      // Log error
+      log("Signup error: $e\n$st");
+
+      if (!mounted) return;
+
+      // Show toast for unexpected errors
+      Fluttertoast.showToast(
+        msg: ApiResponseMessages.somethingWentWrong,
+        backgroundColor: Theme.of(context).colorScheme.error,
+      );
+    }
+  }
+
+  // ✅ Format date into dd-MM-yyyy
+  String formatDate(DateTime date) {
+    return DateFormat('dd-MM-yyyy').format(date);
+  }
+
+  Future<void> _pickDate(BuildContext context) async {
+    final today = DateTime.now();
+
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: DateTime(today.year - 18, today.month, today.day),
+      firstDate: DateTime(1900),
+      lastDate: DateTime(today.year - 18, today.month, today.day),
+      builder: (context, child) {
+        return Theme(
+          data: ThemeData.light().copyWith(
+            colorScheme: const ColorScheme.light(
+              primary: Colors.deepPurple,
+              onPrimary: Colors.white,
+              onSurface: Colors.black,
+            ),
+          ),
+          child: child!,
+        );
+      },
+    );
+
+    if (picked != null) {
+      dobController.text = formatDate(picked); // ✅ set formatted string
+    }
+  }
+
   @override
   void dispose() {
-    super.dispose();
-
+    firstNameController.dispose();
+    lastNameController.dispose();
     emailController.dispose();
+    phoneController.dispose();
+    dobController.dispose();
     passwordController.dispose();
     confirmPasswordController.dispose();
+    super.dispose();
   }
 
   @override
@@ -39,10 +160,136 @@ class _SignupFormState extends State<SignupForm> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           CustomTextField(
+            controller: firstNameController,
+            label: "First Name",
+            onValidate: (value) {
+              if (value == null || value.isEmpty) {
+                return "First name is required!";
+              }
+              if (value.length < 2) {
+                return "First name must be at least 2 characters";
+              }
+              return null;
+            },
+          ),
+          SizedBox(height: 10),
+          CustomTextField(
+            controller: lastNameController,
+            label: "Last Name",
+            onValidate: (value) {
+              if (value == null || value.isEmpty) {
+                return "Last name is required!";
+              }
+              if (value.length < 2) {
+                return "Last name must be at least 2 characters";
+              }
+              return null;
+            },
+          ),
+          SizedBox(height: 10),
+          CustomTextField(
             controller: emailController,
             keyBoardType: TextInputType.emailAddress,
             label: "Email",
+            onValidate: (value) {
+              if (value == null || value.isEmpty) {
+                return "Email is required!";
+              }
+              final emailRegex = RegExp(r'^[^@]+@[^@]+\.[^@]+');
+              if (!emailRegex.hasMatch(value)) {
+                return "Enter a valid email address";
+              }
+              return null;
+            },
           ),
+          SizedBox(height: 10),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              CountryCodePicker(
+                onChanged: (code) {
+                  selectedCountry = {
+                    'code': code.dialCode!,
+                    'countryCode': code.code!,
+                    'name': code.name!,
+                  };
+                },
+                initialSelection:
+                    selectedCountry['countryCode'], // UK as default
+                favorite: [
+                  selectedCountry['code']!,
+                  selectedCountry['countryCode']!,
+                ], // Optional favorites
+
+                padding: EdgeInsetsGeometry.symmetric(vertical: 8),
+                showCountryOnly: false, // Show country name with flag
+                showOnlyCountryWhenClosed: false,
+                alignLeft: false,
+                margin: const EdgeInsets.symmetric(horizontal: 6),
+                comparator: (a, b) => b.name!.compareTo(a.name!),
+
+                flagDecoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(2),
+                ),
+              ),
+
+              Expanded(
+                child: CustomTextField(
+                  controller: phoneController,
+                  label: "Phone",
+                  keyBoardType: TextInputType.phone,
+                  onValidate: (value) {
+                    if (value == null || value.isEmpty) {
+                      return "Phone number is required";
+                    }
+                    final phoneRegex = RegExp(
+                      r'^\d{10,15}$',
+                    ); // allow 10–15 digits
+                    if (!phoneRegex.hasMatch(value)) {
+                      return "Enter a valid phone number";
+                    }
+                    return null;
+                  },
+                ),
+              ),
+            ],
+          ),
+          SizedBox(height: 10),
+          CustomTextField(
+            controller: dobController,
+            label: "Date of Birth",
+            readOnly: true,
+            onTap: () => _pickDate(context),
+
+            suffixIcon: const Icon(Icons.calendar_today),
+
+            onValidate: (value) {
+              if (value == null || value.isEmpty) {
+                return "Please select your date of birth!";
+              }
+
+              try {
+                // Parse String -> DateTime
+                final dob = DateFormat("dd-MM-yyyy").parseStrict(value);
+
+                final today = DateTime.now();
+                final eighteenYearsAgo = DateTime(
+                  today.year - 18,
+                  today.month,
+                  today.day,
+                );
+
+                if (dob.isAfter(eighteenYearsAgo)) {
+                  return "You must be at least 18 years old";
+                }
+              } catch (e) {
+                return "Invalid date format";
+              }
+
+              return null;
+            },
+          ),
+
           SizedBox(height: 10),
           StatefulBuilder(
             builder: (context, setState) {
@@ -62,9 +309,9 @@ class _SignupFormState extends State<SignupForm> {
                     },
                     onValidate: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Please enter your password';
-                      } else if (value.length < 6) {
-                        return 'Password must be at least 6 characters';
+                        return 'Please enter your password!';
+                      } else if (value.length < 8) {
+                        return 'Password must be at least 8 characters.';
                       }
                       return null;
                     },
@@ -85,10 +332,9 @@ class _SignupFormState extends State<SignupForm> {
                     },
                     onValidate: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Please confirm your password';
-                      }
-                      if (value != passwordController.text) {
-                        return 'Passwords do not match';
+                        return 'Please confirm your password!';
+                      } else if (value != passwordController.text) {
+                        return 'Passwords do not match.';
                       }
                       return null;
                     },
@@ -99,14 +345,16 @@ class _SignupFormState extends State<SignupForm> {
           ),
 
           SizedBox(height: 20),
-          CustomMaterialButton(text: "Sign Up", onTap: () {}),
+          CustomMaterialButton(text: "Sign Up", onTap: _submitSignupForm),
           SizedBox(height: 30),
           Align(
             alignment: Alignment.centerLeft,
             child: SignUpOrSignInButton(
               text: "Already have an account?",
               buttonText: "Sign In",
-              onButtonTapped: () {},
+              onButtonTapped: () {
+                Navigator.pushReplacementNamed(context, Routes.login);
+              },
             ),
           ),
         ],

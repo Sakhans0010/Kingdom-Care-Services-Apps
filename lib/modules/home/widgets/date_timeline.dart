@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:kingdom_care_services_app/app_utils/constants.dart';
+import 'package:kingdom_care_services_app/constants/constants.dart';
 
 class DateTimeline extends StatefulWidget {
   final bool isHomeScreen;
@@ -61,9 +61,7 @@ class _DateTimelineState extends State<DateTimeline> {
               },
             ),
     );
-    
-    
-    
+
     SizedBox(
       height: 100,
       child: Row(
@@ -73,7 +71,7 @@ class _DateTimelineState extends State<DateTimeline> {
               selectedDate.month == date.month &&
               selectedDate.day == date.day;
 
-          return  Expanded(
+          return Expanded(
             child: GestureDetector(
               onTap: () {
                 setState(() {
@@ -123,7 +121,8 @@ class _DateTimelineState extends State<DateTimeline> {
   }
 
   Widget buildDateItem(DateTime date, bool isExpanded) {
-    bool isSelected = selectedDate.year == date.year &&
+    bool isSelected =
+        selectedDate.year == date.year &&
         selectedDate.month == date.month &&
         selectedDate.day == date.day;
 
@@ -134,7 +133,7 @@ class _DateTimelineState extends State<DateTimeline> {
         });
       },
       child: Container(
-        margin:  EdgeInsets.symmetric(horizontal: widget.isHomeScreen ? 5 : 5),
+        margin: EdgeInsets.symmetric(horizontal: widget.isHomeScreen ? 5 : 5),
         padding: const EdgeInsets.symmetric(horizontal: 12),
         width: widget.isHomeScreen ? 60 : 50,
         decoration: BoxDecoration(

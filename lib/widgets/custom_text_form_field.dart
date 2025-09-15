@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:kingdom_care_services_app/app_utils/app_default_theme.dart';
-import 'package:kingdom_care_services_app/app_utils/constants.dart';
-
+import 'package:kingdom_care_services_app/constants/constants.dart';
+import 'package:kingdom_care_services_app/utils/app_default_theme.dart';
 
 class CustomTextField extends StatelessWidget {
   final TextEditingController? controller;
@@ -14,7 +13,7 @@ class CustomTextField extends StatelessWidget {
   final Function? onSuffixTapped;
 
   final VoidCallback? onTap;
-  final TextInputType keyBoardType;
+  final TextInputType? keyBoardType;
   final String? hint;
   final String? label;
   final String? initialValue;
@@ -44,7 +43,7 @@ class CustomTextField extends StatelessWidget {
     this.onSuffixTapped,
     this.autovalidateMode,
     this.suffixIcon,
-    required this.keyBoardType,
+    this.keyBoardType,
     this.hint,
     this.label,
     this.obscureText = false,
@@ -95,17 +94,16 @@ class CustomTextField extends StatelessWidget {
 
             color: AppColors.primaryColor,
           ),
-          suffixIcon:
-              isPasswordTextField == false
-                  ? null
-                  : IconButton(
-                    onPressed: () => onSuffixTapped!(),
-                    splashColor: Colors.transparent,
-                    icon: Icon(
-                      isVisible ? Icons.visibility_off : Icons.visibility,
-                      color: Theme.of(context).colorScheme.secondary,
-                    ),
+          suffixIcon: isPasswordTextField == false
+              ? null
+              : IconButton(
+                  onPressed: () => onSuffixTapped!(),
+                  splashColor: Colors.transparent,
+                  icon: Icon(
+                    isVisible ? Icons.visibility_off : Icons.visibility,
+                    color: Theme.of(context).colorScheme.secondary,
                   ),
+                ),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
             borderSide: const BorderSide(color: AppColors.borderColor),
@@ -135,10 +133,10 @@ class CustomTextField extends StatelessWidget {
             onTapOutside ??
             (closeKeyboardOnTapOutSide
                 ? (event) {
-                  if (FocusScope.of(context).hasPrimaryFocus) {
-                    FocusScope.of(context).unfocus();
+                    if (FocusScope.of(context).hasPrimaryFocus) {
+                      FocusScope.of(context).unfocus();
+                    }
                   }
-                }
                 : null),
       ),
     );

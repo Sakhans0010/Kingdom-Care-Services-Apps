@@ -1,6 +1,6 @@
 // import 'package:google_fonts/google_fonts.dart';
-import 'package:kingdom_care_services_app/app_utils/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:kingdom_care_services_app/constants/constants.dart';
 
 import '../main.dart';
 
@@ -45,7 +45,7 @@ class AppThemes {
         primaryContainer: AppColors.secondaryColor,
 
         tertiaryContainer: const Color.fromARGB(255, 88, 97, 136),
-        error: const Color(0XFFDC2626),
+        error: Colors.red,
         onError: Colors.white,
         onTertiaryContainer: Colors.grey,
         surface: AppColors.primaryColor,

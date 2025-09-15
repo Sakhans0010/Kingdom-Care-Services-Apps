@@ -1,25 +1,80 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
-// import 'package:form_validator/form_validator.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:kingdom_care_services_app/constants/api_response_messages.dart';
+import 'package:kingdom_care_services_app/constants/constants.dart';
+import 'package:kingdom_care_services_app/modules/auth/providers/auth_provider.dart';
+import 'package:kingdom_care_services_app/routes/routes.dart';
 import 'package:kingdom_care_services_app/widgets/custom_material_button.dart';
 import 'package:kingdom_care_services_app/widgets/custom_text_form_field.dart';
-import 'package:kingdom_care_services_app/widgets/lowercase_formatter.dart';
 
 import 'signUp_or_signIn_button.dart';
 
-class LoginForm extends StatefulWidget {
+class LoginForm extends ConsumerStatefulWidget {
   const LoginForm({super.key});
 
   @override
-  State<LoginForm> createState() => _LoginFormState();
+  ConsumerState<LoginForm> createState() => _LoginFormState();
 }
 
-class _LoginFormState extends State<LoginForm> {
+class _LoginFormState extends ConsumerState<LoginForm> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
   var isVisible = false;
+
+  // Submit Login Form
+  void _submitLoginForm() async {
+    try {
+      FocusScope.of(context).unfocus();
+
+      if (!_formKey.currentState!.validate()) return;
+
+      EasyLoading.show();
+
+      // Call the signin function directly and await response
+      final response = await ref
+          .read(authProvider.notifier)
+          .signin(
+            email: emailController.text.trim(),
+            password: passwordController.text.trim(),
+          );
+
+      EasyLoading.dismiss();
+
+      if (!mounted) return;
+
+      Fluttertoast.showToast(
+        msg: response.isSuccess
+            ? response.message ?? ApiResponseMessages.signedInSuccessfully
+            : response.error ?? ApiResponseMessages.somethingWentWrong,
+        backgroundColor: response.isSuccess
+            ? AppColors.primaryColor
+            : Theme.of(context).colorScheme.error,
+      );
+
+      if (!mounted) return; // ensures widget is still in the tree
+
+      if (response.isSuccess) {
+        Navigator.pushReplacementNamed(context, Routes.mainScreen);
+      }
+    } catch (e) {
+      EasyLoading.dismiss();
+
+      log("Error: $e");
+      if (!mounted) return;
+
+      Fluttertoast.showToast(
+        msg: ApiResponseMessages.somethingWentWrong,
+        backgroundColor: Theme.of(context).colorScheme.error,
+      );
+    }
+  }
 
   @override
   void dispose() {
@@ -41,6 +96,16 @@ class _LoginFormState extends State<LoginForm> {
             keyBoardType: TextInputType.emailAddress,
 
             label: "Email",
+            onValidate: (value) {
+              if (value == null || value.isEmpty) {
+                return "Email is required!";
+              }
+              final emailRegex = RegExp(r'^[^@]+@[^@]+\.[^@]+');
+              if (!emailRegex.hasMatch(value)) {
+                return "Enter a valid email address";
+              }
+              return null;
+            },
           ),
           SizedBox(height: 10),
           StatefulBuilder(
@@ -49,29 +114,35 @@ class _LoginFormState extends State<LoginForm> {
                 isPasswordTextField: true,
                 controller: passwordController,
                 keyBoardType: TextInputType.visiblePassword,
-                inputFormatters: [LowerCaseTextFormatter()],
                 label: "Password",
                 obscureText: isVisible,
-                // onValidate: ValidationBuilder().email().build(),
                 isVisible: isVisible,
                 onSuffixTapped: () {
                   setState(() {
                     isVisible = !isVisible;
                   });
                 },
+                onValidate: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter your password!';
+                  }
+                  return null;
+                },
               );
             },
           ),
 
           SizedBox(height: 20),
-          CustomMaterialButton(text: "Login", onTap: () {}),
+          CustomMaterialButton(text: "Login", onTap: _submitLoginForm),
           SizedBox(height: 30),
           Align(
             alignment: Alignment.centerLeft,
             child: SignUpOrSignInButton(
               text: "Don't have an account?",
               buttonText: "Sign Up",
-              onButtonTapped: () {},
+              onButtonTapped: () {
+                Navigator.pushReplacementNamed(context, Routes.signup);
+              },
             ),
           ),
         ],
