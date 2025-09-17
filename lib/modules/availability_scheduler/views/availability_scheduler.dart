@@ -1,8 +1,6 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:kingdom_care_services_app/app_utils/constants.dart';
+import 'package:kingdom_care_services_app/constants/constants.dart';
 
 class AvailabilityScheduler extends StatefulWidget {
   const AvailabilityScheduler({super.key});
@@ -19,9 +17,9 @@ class _AvailabilitySchedulerState extends State<AvailabilityScheduler> {
 
   List<DateTime> getDatesInMonth(DateTime month) {
     final now = DateTime.now();
-    final _isCurrentMonth = month.year == now.year && month.month == now.month;
+    final isCurrentMonth = month.year == now.year && month.month == now.month;
 
-    final startDay = _isCurrentMonth ? now.day : 1;
+    final startDay = isCurrentMonth ? now.day : 1;
     final lastDay = DateTime(month.year, month.month + 1, 0);
 
     return List.generate(
@@ -169,7 +167,7 @@ class _AvailabilitySchedulerState extends State<AvailabilityScheduler> {
       // backgroundColor: AppColors.background,
       // appBar: AppBar(
       // backgroundColor: AppColors.background,
-      
+
       //   elevation: 0,
       //   centerTitle: false,
       //   foregroundColor: Colors.black,
@@ -182,7 +180,6 @@ class _AvailabilitySchedulerState extends State<AvailabilityScheduler> {
       body: SafeArea(
         child: Column(
           children: [
-            
             _buildUpperSection(monthLabel),
             SizedBox(height: 10),
             Expanded(
@@ -228,9 +225,9 @@ class _AvailabilitySchedulerState extends State<AvailabilityScheduler> {
               ),
               const SizedBox(width: 10),
               Text(
-              "Availability Scheduler",
-              style: Theme.of(context).textTheme.titleMedium,
-                      ),
+                "Availability Scheduler",
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
             ],
           ),
           Row(

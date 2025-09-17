@@ -1,15 +1,11 @@
-import 'package:date_picker_timeline/date_picker_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:kingdom_care_services_app/app_utils/app_images.dart';
-import 'package:kingdom_care_services_app/app_utils/constants.dart';
 import 'package:kingdom_care_services_app/models/shift.dart';
 import 'package:kingdom_care_services_app/modules/home/widgets/date_timeline.dart';
 import 'package:kingdom_care_services_app/modules/home/widgets/profile_section_widget.dart';
 import 'package:kingdom_care_services_app/modules/home/widgets/section_title_row.dart';
 import 'package:kingdom_care_services_app/modules/home/widgets/user_current_shifts.dart';
 import 'package:kingdom_care_services_app/modules/shifts/widgets/shift_item_widget.dart';
-
-import '../../../widgets/shift_item_widget.dart';
+import 'package:kingdom_care_services_app/utils/app_images.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});

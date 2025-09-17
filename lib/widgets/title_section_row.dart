@@ -1,6 +1,5 @@
-
 import 'package:flutter/material.dart';
-import 'package:kingdom_care_services_app/app_utils/app_images.dart';
+import 'package:kingdom_care_services_app/utils/app_images.dart';
 
 class TitleSectionRow extends StatelessWidget {
   final String title;

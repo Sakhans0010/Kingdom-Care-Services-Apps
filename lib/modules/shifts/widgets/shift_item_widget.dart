@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:kingdom_care_services_app/constants/constants.dart';
 import 'package:kingdom_care_services_app/models/shift.dart';
-import 'package:kingdom_care_services_app/app_utils/constants.dart';
 import 'package:kingdom_care_services_app/routes/routes.dart'; // for AppColors
 
 class ShiftItemWidget extends StatelessWidget {
@@ -37,7 +37,7 @@ class ShiftItemWidget extends StatelessWidget {
         child: Row(
           children: [
             // Left colored column
-            Container(
+            SizedBox(
               width: 90,
 
               child: Column(

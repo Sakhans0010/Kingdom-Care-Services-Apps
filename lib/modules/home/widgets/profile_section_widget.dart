@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:kingdom_care_services_app/app_utils/constants.dart';
+import 'package:kingdom_care_services_app/constants/constants.dart';
 
 class ProfileSectionWidget extends StatelessWidget {
-  const ProfileSectionWidget({
-    super.key,
-  });
+  const ProfileSectionWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -14,11 +12,7 @@ class ProfileSectionWidget extends StatelessWidget {
         CircleAvatar(
           radius: 25,
           backgroundColor: AppColors.primaryColor,
-          child: Icon(
-            Icons.person,
-            size: 40,
-            color: AppColors.background,
-          ),
+          child: Icon(Icons.person, size: 40, color: AppColors.background),
         ),
         SizedBox(width: 10),
         RichText(

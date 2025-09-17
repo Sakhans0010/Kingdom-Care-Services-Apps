@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:kingdom_care_services_app/app_utils/constants.dart';
+import 'package:kingdom_care_services_app/constants/constants.dart';
 
 class UserChatItem extends StatelessWidget {
   const UserChatItem({super.key});

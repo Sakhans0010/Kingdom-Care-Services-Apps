@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:kingdom_care_services_app/app_utils/app_images.dart';
 import 'package:kingdom_care_services_app/modules/chats/views/chats.dart';
-
 import 'package:kingdom_care_services_app/modules/home/views/home_screen.dart';
-import 'package:kingdom_care_services_app/modules/home/widgets/profile_section_widget.dart';
 import 'package:kingdom_care_services_app/modules/main/widgets/nav_bar_widget.dart';
 import 'package:kingdom_care_services_app/modules/profile/views/profile_screen.dart';
 import 'package:kingdom_care_services_app/modules/shifts/views/shifts.dart';
@@ -31,11 +28,16 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(child: _screens[_currentIndex]),
-      bottomNavigationBar: CustomNavBar(
-        currentIndex: _currentIndex,
-        onItemTapped: _onItemTapped,
+    return GestureDetector(
+      onTap: () {
+        FocusScope.of(context).unfocus();
+      },
+      child: Scaffold(
+        body: SafeArea(child: _screens[_currentIndex]),
+        bottomNavigationBar: CustomNavBar(
+          currentIndex: _currentIndex,
+          onItemTapped: _onItemTapped,
+        ),
       ),
     );
   }

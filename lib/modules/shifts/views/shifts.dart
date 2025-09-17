@@ -1,12 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:kingdom_care_services_app/app_utils/app_images.dart';
-import 'package:kingdom_care_services_app/app_utils/constants.dart';
-import 'package:kingdom_care_services_app/models/shift.dart';
-import 'package:kingdom_care_services_app/modules/chats/views/chats.dart';
-import 'package:kingdom_care_services_app/modules/home/widgets/date_timeline.dart';
+import 'package:kingdom_care_services_app/constants/constants.dart';
 import 'package:kingdom_care_services_app/modules/shifts/widgets/available_shifts.dart';
 import 'package:kingdom_care_services_app/modules/shifts/widgets/completed_shifts.dart';
-import 'package:kingdom_care_services_app/modules/shifts/widgets/shift_item_widget.dart';
 import 'package:kingdom_care_services_app/modules/shifts/widgets/upcoming_shifts.dart';
 import 'package:kingdom_care_services_app/widgets/title_section_row.dart';
 
