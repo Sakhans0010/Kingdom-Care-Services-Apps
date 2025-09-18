@@ -6,6 +6,7 @@ class AppColors {
   static const Color primaryColor = Color(0xFF138AEC);
   // static const Color primaryColor = Color(0xff5cb4a6);
   static const Color secondaryColor = Color(0xFFF0F4F8);
+  static const Color primary50 = Color(0xFFE8F3FE);
 
   static const Color secondaryContainerColor = Color(0xffffde72);
   static const Color primaryContainerColor = Color(0xfff1f0fc);
@@ -13,6 +14,7 @@ class AppColors {
   static const Color borderColor = Color(0xFFDBE1E6);
   static const Color textFieldFill = Colors.white;
   static const Color grey = Color(0xffe9e9ee);
+  static const Color error = Colors.red;
 
   // static const Color background = Colors.white;
   // static const Color primaryColor = Color(0xff36338c);
