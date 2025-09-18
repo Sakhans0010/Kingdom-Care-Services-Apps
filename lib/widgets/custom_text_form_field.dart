@@ -19,6 +19,7 @@ class CustomTextField extends StatelessWidget {
   final String? initialValue;
   final bool obscureText;
   final bool readOnly;
+  final bool filled;
   final int? maxLines;
   final bool enable, autoFocus;
   final bool closeKeyboardOnTapOutSide;
@@ -28,6 +29,7 @@ class CustomTextField extends StatelessWidget {
   final List<TextInputFormatter>? inputFormatters;
   final AutovalidateMode? autovalidateMode;
   final Widget? suffixIcon;
+  final IconData? prefixIcon;
   final TextCapitalization textCapitalization;
 
   const CustomTextField({
@@ -43,11 +45,13 @@ class CustomTextField extends StatelessWidget {
     this.onSuffixTapped,
     this.autovalidateMode,
     this.suffixIcon,
+    this.prefixIcon,
     this.keyBoardType,
     this.hint,
     this.label,
     this.obscureText = false,
     this.readOnly = false,
+    this.filled = true,
     this.inputFormatters,
     this.enable = true,
     this.autoFocus = false,
@@ -67,7 +71,7 @@ class CustomTextField extends StatelessWidget {
         initialValue: initialValue,
         style: AppThemes.textThemeContext.bodyMedium!.copyWith(
           fontWeight: FontWeight.w600,
-          color: AppColors.primaryColor,
+          color: AppColors.neutral500,
         ),
 
         readOnly: readOnly,
@@ -76,11 +80,16 @@ class CustomTextField extends StatelessWidget {
         cursorColor: AppColors.primaryColor,
         maxLines: maxLines,
         decoration: InputDecoration(
-          focusColor: AppThemes.colorContext.secondary,
-          hoverColor: AppThemes.colorContext.secondary,
-          contentPadding: const EdgeInsets.all(15.0),
+          focusColor: AppColors.secondaryColor,
+          hoverColor: AppColors.secondaryColor,
+          contentPadding: const EdgeInsets.symmetric(
+            vertical: 16,
+            horizontal: 12,
+          ),
           hintText: hint,
           labelText: label,
+          filled: filled,
+          fillColor: AppColors.textFieldFill,
           hintStyle: AppThemes.textThemeContext.bodySmall!.copyWith(
             fontWeight: FontWeight.w600,
             color: const Color.fromARGB(255, 134, 131, 131),
@@ -94,6 +103,9 @@ class CustomTextField extends StatelessWidget {
 
             color: AppColors.primaryColor,
           ),
+          prefixIcon: prefixIcon == null
+              ? null
+              : Icon(prefixIcon, color: AppColors.neutral500),
           suffixIcon: isPasswordTextField == false
               ? null
               : IconButton(
@@ -101,23 +113,24 @@ class CustomTextField extends StatelessWidget {
                   splashColor: Colors.transparent,
                   icon: Icon(
                     isVisible ? Icons.visibility_off : Icons.visibility,
-                    color: Theme.of(context).colorScheme.secondary,
+                    color: AppColors.neutral500,
                   ),
                 ),
+
           border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(14),
             borderSide: const BorderSide(color: AppColors.borderColor),
           ),
           enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(14),
             borderSide: const BorderSide(color: AppColors.borderColor),
-            borderRadius: BorderRadius.circular(10),
           ),
           focusedBorder: OutlineInputBorder(
-            borderSide: const BorderSide(color: AppColors.borderColor),
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(14),
+            borderSide: const BorderSide(color: AppColors.primaryColor),
           ),
           errorBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(8),
+            borderRadius: BorderRadius.circular(14),
             borderSide: BorderSide(color: AppThemes.colorContext.error),
           ),
         ),

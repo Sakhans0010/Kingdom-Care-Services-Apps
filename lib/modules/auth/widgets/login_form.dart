@@ -7,11 +7,10 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:kingdom_care_services_app/constants/api_response_messages.dart';
 import 'package:kingdom_care_services_app/constants/constants.dart';
 import 'package:kingdom_care_services_app/modules/auth/providers/auth_provider.dart';
+import 'package:kingdom_care_services_app/modules/auth/widgets/signup_or_signin_button.dart';
 import 'package:kingdom_care_services_app/routes/routes.dart';
 import 'package:kingdom_care_services_app/widgets/custom_material_button.dart';
 import 'package:kingdom_care_services_app/widgets/custom_text_form_field.dart';
-
-import 'signUp_or_signIn_button.dart';
 
 class LoginForm extends ConsumerStatefulWidget {
   const LoginForm({super.key});
@@ -41,7 +40,7 @@ class _LoginFormState extends ConsumerState<LoginForm> {
       final response = await ref
           .read(authProvider.notifier)
           .signin(
-            email: emailController.text.trim(),
+            email: emailController.text.toLowerCase().trim(),
             password: passwordController.text.trim(),
           );
 
@@ -117,6 +116,7 @@ class _LoginFormState extends ConsumerState<LoginForm> {
                 label: "Password",
                 obscureText: isVisible,
                 isVisible: isVisible,
+
                 onSuffixTapped: () {
                   setState(() {
                     isVisible = !isVisible;
@@ -132,9 +132,26 @@ class _LoginFormState extends ConsumerState<LoginForm> {
             },
           ),
 
-          SizedBox(height: 20),
+          // Forgot password
+          Align(
+            alignment: Alignment.centerRight,
+            child: TextButton(
+              onPressed: () {},
+              child: const Text(
+                "Forgot Password?",
+                style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w500,
+                  color: AppColors.primaryColor,
+                ),
+              ),
+            ),
+          ),
+
+          const SizedBox(height: 10),
           CustomMaterialButton(text: "Login", onTap: _submitLoginForm),
-          SizedBox(height: 30),
+
+          SizedBox(height: 20),
           Align(
             alignment: Alignment.centerLeft,
             child: SignUpOrSignInButton(
