@@ -114,7 +114,7 @@ class _LoginFormState extends ConsumerState<LoginForm> {
                 controller: passwordController,
                 keyBoardType: TextInputType.visiblePassword,
                 label: "Password",
-                obscureText: isVisible,
+                obscureText: !isVisible,
                 isVisible: isVisible,
 
                 onSuffixTapped: () {
@@ -136,14 +136,21 @@ class _LoginFormState extends ConsumerState<LoginForm> {
           Align(
             alignment: Alignment.centerRight,
             child: TextButton(
-              onPressed: () {},
-              child: const Text(
+              onPressed: () {
+                Navigator.pushNamed(context, Routes.forgotPassword);
+              },
+              child: Text(
                 "Forgot Password?",
-                style: TextStyle(
-                  fontSize: 14,
+                style: Theme.of(context).textTheme.bodySmall!.copyWith(
                   fontWeight: FontWeight.w500,
                   color: AppColors.primaryColor,
                 ),
+
+                // TextStyle(
+                //   fontSize: 14,
+                //   fontWeight: FontWeight.w500,
+                //   color: AppColors.primaryColor,
+                // ),
               ),
             ),
           ),

@@ -331,7 +331,7 @@ class _SignupFormState extends ConsumerState<SignupForm> {
                     label: "Password",
                     prefixIcon: Icons.lock_outline,
 
-                    obscureText: isVisible,
+                    obscureText: !isVisible,
                     isVisible: isVisible,
                     onSuffixTapped: () {
                       setState(() {
@@ -356,7 +356,7 @@ class _SignupFormState extends ConsumerState<SignupForm> {
                     label: "Confirm Password",
                     prefixIcon: Icons.lock_outline,
 
-                    obscureText: isVisible,
+                    obscureText: !isVisible,
                     isVisible: isVisible,
                     onSuffixTapped: () {
                       setState(() {

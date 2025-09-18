@@ -26,9 +26,19 @@ class AppColors {
 
   // static const Color primary500 = Color(0xFF138AEC);
   // static const Color neutral100 = Color(0xFFF0F4F8);
-  static const Color neutral500 = Color(0xFF617789);
-  static const Color neutral900 = Color(0xFF111518);
+  // static const Color neutral500 = Color(0xFF617789);
+  // static const Color neutral900 = Color(0xFF111518);
   // static const Color borderColor2 = Color(0xFFDBE1E6);
+
+  static const Color neutral50 = Color(0xFFF8FAFC);
+  static const Color neutral100 = Color(0xFFF1F5F9);
+  static const Color neutral200 = Color(0xFFE2E8F0);
+  static const Color neutral400 = Color(0xFF94A3B8);
+  static const Color neutral500 = Color(0xFF617789);
+  static const Color neutral700 = Color(0xFF334155);
+  static const Color neutral900 = Color(0xFF111518);
+
+  static const Color borderColor2 = Color(0xFFDBE1E6);
 
   // Added from HTML design
   static const Color textColor = Color(0xFF1F2937);

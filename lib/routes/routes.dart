@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kingdom_care_services_app/models/shift.dart';
+import 'package:kingdom_care_services_app/modules/auth/views/forgot_password_screen.dart';
 import 'package:kingdom_care_services_app/modules/auth/views/login_screen.dart';
 import 'package:kingdom_care_services_app/modules/auth/views/signup_screen.dart';
 import 'package:kingdom_care_services_app/modules/availability_scheduler/views/availability_scheduler.dart';
@@ -20,6 +21,7 @@ class Routes {
   static const String availabilityScheduler = "availabilityScheduler";
   static const String shiftDetailsScreen = "shiftDetailsScreen";
   static const String mapDetailsScreen = "mapDetailsScreen";
+  static const String forgotPassword = "forgotPassword";
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     final args = settings.arguments;
@@ -28,6 +30,8 @@ class Routes {
         return MaterialPageRoute(builder: (_) => LoginScreen());
       case signup:
         return MaterialPageRoute(builder: (_) => SignupScreen());
+      case forgotPassword:
+        return MaterialPageRoute(builder: (_) => ForgotPasswordScreen());
       case mainScreen:
         return MaterialPageRoute(builder: (_) => MainScreen());
       case home:
