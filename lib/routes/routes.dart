@@ -4,8 +4,10 @@ import 'package:kingdom_care_services_app/modules/auth/views/forgot_password_scr
 import 'package:kingdom_care_services_app/modules/auth/views/login_screen.dart';
 import 'package:kingdom_care_services_app/modules/auth/views/signup_screen.dart';
 import 'package:kingdom_care_services_app/modules/availability_scheduler/views/availability_scheduler.dart';
+import 'package:kingdom_care_services_app/modules/chats/views/chat_screen.dart';
 import 'package:kingdom_care_services_app/modules/home/views/home_screen.dart';
 import 'package:kingdom_care_services_app/modules/main/main_screen.dart';
+import 'package:kingdom_care_services_app/modules/profile/views/documents_management_screen.dart';
 import 'package:kingdom_care_services_app/modules/profile/views/edit_profile_screen.dart';
 // import 'package:kingdom_care_services_app/modules/auth/views/login_screen.dart';
 // import 'package:kingdom_care_services_app/modules/auth/views/signup_screen.dart';
@@ -24,6 +26,8 @@ class Routes {
   static const String mapDetailsScreen = "mapDetailsScreen";
   static const String forgotPassword = "forgotPassword";
   static const String editProfileScreen = "editProfileScreen";
+  static const String documentsManagementScreen = "documentsManagementScreen";
+  static const String chatScreen = "chatScreen";
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     final args = settings.arguments;
@@ -40,6 +44,10 @@ class Routes {
         return MaterialPageRoute(builder: (_) => HomeScreen());
       case editProfileScreen:
         return MaterialPageRoute(builder: (_) => EditProfileScreen());
+      case documentsManagementScreen:
+        return MaterialPageRoute(builder: (_) => DocumentsManagementScreen());
+      case chatScreen:
+        return MaterialPageRoute(builder: (_) => ChatScreen());
       case availabilityScheduler:
         return MaterialPageRoute(builder: (_) => AvailabilityScheduler());
       case shiftDetailsScreen:

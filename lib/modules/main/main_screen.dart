@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kingdom_care_services_app/constants/constants.dart';
-import 'package:kingdom_care_services_app/modules/chats/views/chats.dart';
+import 'package:kingdom_care_services_app/modules/chats/views/chats_list_screen.dart';
 import 'package:kingdom_care_services_app/modules/home/views/home_screen.dart';
 import 'package:kingdom_care_services_app/modules/main/widgets/nav_bar_widget.dart';
 import 'package:kingdom_care_services_app/modules/profile/views/profile_screen.dart';
@@ -19,7 +18,7 @@ class _MainScreenState extends State<MainScreen> {
   final List<Widget> _screens = [
     HomeScreen(),
     ShiftsScreen(),
-    ChatsScreen(),
+    ChatsListScreen(),
     ProfileScreen(),
   ];
 
@@ -33,15 +32,12 @@ class _MainScreenState extends State<MainScreen> {
       onTap: () {
         FocusScope.of(context).unfocus();
       },
-      child: SafeArea(
-        bottom: false,
-        child: Scaffold(
-          backgroundColor: AppColors.background,
-          body: _screens[_currentIndex],
-          bottomNavigationBar: CustomNavBar(
-            currentIndex: _currentIndex,
-            onItemTapped: _onItemTapped,
-          ),
+      child: Scaffold(
+        // backgroundColor: AppColors.background,
+        body: SafeArea(child: _screens[_currentIndex]),
+        bottomNavigationBar: CustomNavBar(
+          currentIndex: _currentIndex,
+          onItemTapped: _onItemTapped,
         ),
       ),
     );

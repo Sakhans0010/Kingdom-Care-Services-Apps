@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:kingdom_care_services_app/constants/constants.dart';
+import 'package:kingdom_care_services_app/routes/routes.dart';
 
 class UserChatItem extends StatelessWidget {
   const UserChatItem({super.key});
@@ -8,9 +9,11 @@ class UserChatItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
+      onTap: () {
+        Navigator.pushNamed(context, Routes.chatScreen);
+      },
       splashColor: AppColors.primaryContainerColor,
       highlightColor: AppColors.primaryContainerColor.withValues(alpha: 0.5),
-      onTap: () {},
       child: Padding(
         padding: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
 

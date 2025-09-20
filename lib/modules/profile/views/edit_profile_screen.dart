@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kingdom_care_services_app/constants/constants.dart';
 import 'package:kingdom_care_services_app/modules/profile/widgets/profile_image_container.dart';
+import 'package:kingdom_care_services_app/routes/routes.dart';
 import 'package:kingdom_care_services_app/widgets/custom_country_code_picker.dart';
 import 'package:kingdom_care_services_app/widgets/custom_material_button.dart';
 import 'package:kingdom_care_services_app/widgets/custom_network_image.dart';
@@ -201,7 +202,12 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           ).textTheme.bodyMedium!.copyWith(fontSize: 18),
                         ),
                         TextButton.icon(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.pushNamed(
+                              context,
+                              Routes.documentsManagementScreen,
+                            );
+                          },
                           icon: const Icon(Icons.add, size: 18),
                           label: const Text("Add"),
                           style: TextButton.styleFrom(

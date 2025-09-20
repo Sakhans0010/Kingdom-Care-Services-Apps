@@ -7,9 +7,15 @@ import 'package:kingdom_care_services_app/modules/profile/widgets/info_item.dart
 
 class InfoSection extends StatelessWidget {
   final String title;
+  final Widget? optionalButton;
   final List<InfoItem> items;
 
-  const InfoSection({super.key, required this.title, required this.items});
+  const InfoSection({
+    super.key,
+    required this.title,
+    required this.items,
+    this.optionalButton,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -33,11 +39,17 @@ class InfoSection extends StatelessWidget {
             decoration: BoxDecoration(
               border: Border(bottom: BorderSide(color: AppColors.borderColor)),
             ),
-            child: Text(
-              title,
-              style: Theme.of(
-                context,
-              ).textTheme.bodyMedium!.copyWith(fontSize: 18),
+            child: Row(
+              children: [
+                Text(
+                  title,
+                  style: Theme.of(
+                    context,
+                  ).textTheme.bodyMedium!.copyWith(fontSize: 18),
+                ),
+                Spacer(),
+                if (optionalButton != null) optionalButton!,
+              ],
             ),
           ),
           ...items,

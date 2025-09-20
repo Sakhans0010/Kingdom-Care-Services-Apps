@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:kingdom_care_services_app/modules/chats/widgets/user_chat_item.dart';
 import 'package:kingdom_care_services_app/widgets/title_section_row.dart';
 
-class ChatsScreen extends StatelessWidget {
-  const ChatsScreen({super.key});
+class ChatsListScreen extends StatelessWidget {
+  const ChatsListScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

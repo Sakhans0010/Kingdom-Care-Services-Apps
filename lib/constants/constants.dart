@@ -15,6 +15,19 @@ class AppColors {
   static const Color textFieldFill = Colors.white;
   static const Color grey = Color(0xffe9e9ee);
   static const Color error = Colors.red;
+  static const Color warning = Colors.red;
+
+  // Success
+  static const Color success50 = Color(0xFFF0FDF4);
+  static const Color success600 = Color(0xFF16A34A);
+
+  // Warning
+  static const Color warning50 = Color(0xFFFFFBEB);
+  static const Color warning600 = Color(0xFFF59E0B);
+
+  // Danger
+  static const Color danger50 = Color(0xFFFEF2F2);
+  static const Color danger600 = Color(0xFFDC2626);
 
   // static const Color background = Colors.white;
   // static const Color primaryColor = Color(0xff36338c);
