@@ -26,6 +26,8 @@ class CustomTextField extends StatelessWidget {
   final bool isPasswordTextField;
   final bool isVisible;
 
+  final Color? fillColor;
+
   final List<TextInputFormatter>? inputFormatters;
   final AutovalidateMode? autovalidateMode;
   final Widget? suffixIcon;
@@ -49,6 +51,7 @@ class CustomTextField extends StatelessWidget {
     this.keyBoardType,
     this.hint,
     this.label,
+    this.fillColor,
     this.obscureText = false,
     this.readOnly = false,
     this.filled = true,
@@ -89,7 +92,7 @@ class CustomTextField extends StatelessWidget {
           hintText: hint,
           labelText: label,
           filled: filled,
-          fillColor: AppColors.textFieldFill,
+          fillColor: fillColor ?? AppColors.textFieldFill,
           hintStyle: AppThemes.textThemeContext.bodySmall!.copyWith(
             fontWeight: FontWeight.w600,
             color: const Color.fromARGB(255, 134, 131, 131),
@@ -146,9 +149,7 @@ class CustomTextField extends StatelessWidget {
             onTapOutside ??
             (closeKeyboardOnTapOutSide
                 ? (event) {
-                    if (FocusScope.of(context).hasPrimaryFocus) {
-                      FocusScope.of(context).unfocus();
-                    }
+                    FocusScope.of(context).unfocus();
                   }
                 : null),
       ),

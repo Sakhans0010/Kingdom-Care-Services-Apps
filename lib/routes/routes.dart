@@ -6,6 +6,7 @@ import 'package:kingdom_care_services_app/modules/auth/views/signup_screen.dart'
 import 'package:kingdom_care_services_app/modules/availability_scheduler/views/availability_scheduler.dart';
 import 'package:kingdom_care_services_app/modules/home/views/home_screen.dart';
 import 'package:kingdom_care_services_app/modules/main/main_screen.dart';
+import 'package:kingdom_care_services_app/modules/profile/views/edit_profile_screen.dart';
 // import 'package:kingdom_care_services_app/modules/auth/views/login_screen.dart';
 // import 'package:kingdom_care_services_app/modules/auth/views/signup_screen.dart';
 // import 'package:kingdom_care_services_app/modules/home/views/home_screen.dart';
@@ -22,6 +23,7 @@ class Routes {
   static const String shiftDetailsScreen = "shiftDetailsScreen";
   static const String mapDetailsScreen = "mapDetailsScreen";
   static const String forgotPassword = "forgotPassword";
+  static const String editProfileScreen = "editProfileScreen";
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     final args = settings.arguments;
@@ -36,6 +38,8 @@ class Routes {
         return MaterialPageRoute(builder: (_) => MainScreen());
       case home:
         return MaterialPageRoute(builder: (_) => HomeScreen());
+      case editProfileScreen:
+        return MaterialPageRoute(builder: (_) => EditProfileScreen());
       case availabilityScheduler:
         return MaterialPageRoute(builder: (_) => AvailabilityScheduler());
       case shiftDetailsScreen:

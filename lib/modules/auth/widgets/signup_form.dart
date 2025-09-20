@@ -1,6 +1,5 @@
 import 'dart:developer';
 
-import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -10,6 +9,7 @@ import 'package:kingdom_care_services_app/constants/api_response_messages.dart';
 import 'package:kingdom_care_services_app/constants/constants.dart';
 import 'package:kingdom_care_services_app/modules/auth/providers/auth_provider.dart';
 import 'package:kingdom_care_services_app/routes/routes.dart';
+import 'package:kingdom_care_services_app/widgets/custom_country_code_picker.dart';
 // import 'package:form_validator/form_validator.dart';
 import 'package:kingdom_care_services_app/widgets/custom_material_button.dart';
 import 'package:kingdom_care_services_app/widgets/custom_text_form_field.dart';
@@ -220,39 +220,22 @@ class _SignupFormState extends ConsumerState<SignupForm> {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                decoration: BoxDecoration(
-                  border: Border.all(color: AppColors.borderColor),
-                  borderRadius: BorderRadius.circular(14),
-                  color: AppColors.secondaryBackground,
-                ),
-                child: CountryCodePicker(
-                  onChanged: (code) {
-                    selectedCountry = {
-                      'code': code.dialCode!,
-                      'countryCode': code.code!,
-                      'name': code.name!,
-                    };
-                  },
-                  initialSelection:
-                      selectedCountry['countryCode'], // UK as default
-                  favorite: [
-                    selectedCountry['code']!,
-                    selectedCountry['countryCode']!,
-                  ], // Optional favorites
-
-                  padding: EdgeInsetsGeometry.symmetric(vertical: 8),
-                  showCountryOnly: false, // Show country name with flag
-                  showOnlyCountryWhenClosed: false,
-                  alignLeft: false,
-                  margin: const EdgeInsets.symmetric(horizontal: 6),
-                  comparator: (a, b) => b.name!.compareTo(a.name!),
-
-                  flagDecoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(2),
-                  ),
-                ),
+              CustomCountryCodePicker(
+                onChanged: (code) {
+                  selectedCountry = {
+                    'code': code.dialCode!,
+                    'countryCode': code.code!,
+                    'name': code.name!,
+                  };
+                },
+                initialSelection:
+                    selectedCountry['countryCode'], // UK as default
+                favorite: [
+                  selectedCountry['code']!,
+                  selectedCountry['countryCode']!,
+                ],
               ),
+
               SizedBox(width: 15),
               Expanded(
                 child: CustomTextField(

@@ -1,162 +1,171 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:kingdom_care_services_app/constants/api_response_messages.dart';
-import 'package:kingdom_care_services_app/modules/auth/providers/auth_provider.dart';
+import 'package:kingdom_care_services_app/constants/constants.dart';
+import 'package:kingdom_care_services_app/modules/profile/widgets/info_item.dart';
+import 'package:kingdom_care_services_app/modules/profile/widgets/into_section.dart';
+import 'package:kingdom_care_services_app/modules/profile/widgets/profile_card.dart';
 import 'package:kingdom_care_services_app/routes/routes.dart';
-import 'package:kingdom_care_services_app/utils/app_images.dart';
-import 'package:kingdom_care_services_app/widgets/title_section_row.dart';
 
-class ProfileScreen extends ConsumerStatefulWidget {
+class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
 
   @override
-  ConsumerState<ProfileScreen> createState() => _ProfileScreenState();
-}
-
-class _ProfileScreenState extends ConsumerState<ProfileScreen> {
-  // Logout
-  _logOut() async {
-    try {
-      EasyLoading.show();
-
-      var response = await ref.read(authProvider.notifier).logout();
-
-      // Dismiss loading
-      EasyLoading.dismiss();
-
-      // ✅ Ensure widget is still mounted before using context
-      if (!mounted) return;
-
-      // Show success or error message
-      Fluttertoast.showToast(
-        msg: response.isSuccess
-            ? response.message ?? ApiResponseMessages.loggedOutSuccessfully
-            : response.error ?? ApiResponseMessages.somethingWentWrong,
-
-        backgroundColor: response.isSuccess
-            ? null
-            : Theme.of(context).colorScheme.error,
-      );
-
-      // Navigate on success
-      if (response.isSuccess) {
-        Navigator.pushReplacementNamed(context, Routes.login);
-      }
-    } catch (e, st) {
-      // Dismiss loading
-      EasyLoading.dismiss();
-
-      // Log error
-      log("Signup error: $e\n$st");
-
-      if (!mounted) return;
-
-      // Show toast for unexpected errors
-      Fluttertoast.showToast(
-        msg: ApiResponseMessages.somethingWentWrong,
-        backgroundColor: Theme.of(context).colorScheme.error,
-      );
-    }
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      padding: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-      child: Column(
-        children: [
-          TitleSectionRow(title: "Profile"),
-          SizedBox(height: 20),
+    // return ProfileShimmer();
+    return Scaffold(
+      backgroundColor: AppColors.background,
+      appBar: AppBar(
+        title: Text(
+          "Profile",
+          style: Theme.of(
+            context,
+          ).textTheme.titleMedium!.copyWith(fontSize: 22),
+        ),
+        actionsPadding: EdgeInsets.only(right: 17),
 
-          CircleAvatar(
-            radius: 80,
-            backgroundColor: Colors.blue,
-            child: Icon(Icons.person, size: 50, color: Colors.white),
-          ),
-          SizedBox(height: 20),
-          Text(
-            "Good Evening,\nJenny",
-            textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.titleMedium!.copyWith(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          SizedBox(height: 20),
-          Container(
-            padding: EdgeInsets.all(15),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(15),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey.withValues(alpha: 0.2),
-                  spreadRadius: 2,
-                  blurRadius: 5,
-                ),
-              ],
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                optionWidget(
-                  icon: AppImages.EDIT,
-                  title: "Edit Profile",
-                  onTap: () {},
-                ),
-                optionWidget(
-                  icon: AppImages.SCHEDULE,
-                  title: "Change Availability",
-                  onTap: () {
-                    Navigator.pushNamed(context, Routes.availabilityScheduler);
-                  },
-                ),
-                optionWidget(
-                  icon: AppImages.SETTING,
-                  title: "Settings",
-                  onTap: () {},
-                ),
-                optionWidget(
-                  icon: AppImages.LOGOUT,
-                  title: "Log Out",
-                  isLogOut: true,
-                  onTap: _logOut,
-                ),
-              ],
-            ),
+        actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.pushNamed(context, Routes.editProfileScreen);
+            },
+            icon: Icon(Icons.settings, color: AppColors.textColor, size: 28),
           ),
         ],
       ),
-    );
-  }
+      body: SafeArea(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          child: Column(
+            children: [
+              ProfileCard(),
 
-  ListTile optionWidget({
-    required String icon,
-    required String title,
-    required VoidCallback onTap,
-    bool isLogOut = false,
-  }) {
-    return ListTile(
-      onTap: onTap,
-      leading: Image.asset(
-        icon,
-        color: isLogOut ? Colors.red : null,
-        width: 24,
-        height: 24,
-      ),
-      contentPadding: EdgeInsets.symmetric(vertical: 5),
-      title: Text(
-        title,
-        style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-          fontSize: 18,
-          color: isLogOut ? Colors.red : Colors.black,
+              const SizedBox(height: 24),
+
+              // ------------------------
+              // Personal Details Section
+              // ------------------------
+              InfoSection(
+                title: "Personal Details",
+                items: [
+                  InfoItem(
+                    icon: Icons.mail,
+                    iconBgColor: AppColors.secondaryColor,
+                    iconColor: AppColors.primaryColor,
+                    title: "Email",
+                    subtitle: "sophia.carter@email.com",
+                  ),
+                  InfoItem(
+                    icon: Icons.call,
+                    iconBgColor: AppColors.secondaryColor,
+                    iconColor: AppColors.primaryColor,
+                    title: "Phone",
+                    subtitle: "+1 (555) 123-4567",
+                  ),
+                  InfoItem(
+                    icon: Icons.location_on,
+                    iconBgColor: AppColors.secondaryColor,
+                    iconColor: AppColors.primaryColor,
+                    title: "Address",
+                    subtitle: "123 Main St, Anytown, USA",
+                  ),
+                ],
+              ),
+
+              const SizedBox(height: 16),
+
+              // ------------------------
+              // Documents Section
+              // ------------------------
+              InfoSection(
+                title: "Documents",
+                items: [
+                  InfoItem(
+                    icon: Icons.description,
+                    iconBgColor: AppColors.secondaryColor,
+                    iconColor: AppColors.primaryColor,
+                    title: "Background Check",
+                    trailing: Icon(Icons.check_circle, color: Colors.green),
+                  ),
+                  InfoItem(
+                    icon: Icons.description,
+                    iconBgColor: AppColors.secondaryColor,
+                    iconColor: AppColors.primaryColor,
+                    title: "Certification",
+                    trailing: Icon(Icons.check_circle, color: Colors.green),
+                  ),
+                  InfoItem(
+                    icon: Icons.description,
+                    iconBgColor: AppColors.secondaryColor,
+                    iconColor: AppColors.primaryColor,
+                    title: "Resume",
+                    trailing: Icon(Icons.check_circle, color: Colors.green),
+                  ),
+                ],
+              ),
+
+              const SizedBox(height: 16),
+
+              // ------------------------
+              // Settings Section
+              // ------------------------
+              InfoSection(
+                title: "Settings",
+                items: [
+                  InfoItem(
+                    icon: Icons.notifications,
+                    iconBgColor: AppColors.secondaryColor,
+                    iconColor: AppColors.primaryColor,
+                    title: "Notifications",
+                    trailing: Switch(
+                      value: true,
+                      onChanged: (val) {},
+                      activeThumbColor: AppColors.secondaryBackground,
+                      activeTrackColor: AppColors.primaryColor,
+                    ),
+                  ),
+                  InfoItem(
+                    icon: Icons.dark_mode,
+                    iconBgColor: AppColors.secondaryColor,
+                    iconColor: AppColors.primaryColor,
+                    title: "Dark Mode",
+                    trailing: Switch(
+                      value: false,
+                      onChanged: (val) {},
+                      activeThumbColor: AppColors.secondaryBackground,
+                      activeTrackColor: AppColors.primaryColor,
+                    ),
+                  ),
+                ],
+              ),
+
+              const SizedBox(height: 16),
+
+              // ------------------------
+              // Logout Button
+              // ------------------------
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton.icon(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.red.shade100,
+                    foregroundColor: Colors.red.shade600,
+                    padding: const EdgeInsets.symmetric(vertical: 14),
+                    textStyle: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                    ),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                  ),
+                  onPressed: () {},
+                  icon: const Icon(Icons.logout),
+                  label: const Text("Logout"),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
-      trailing: Icon(Icons.arrow_forward_ios, size: 16),
     );
   }
 }

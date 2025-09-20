@@ -55,7 +55,7 @@ class CustomMaterialButton extends StatelessWidget {
                   text,
                   textAlign: TextAlign.center,
                   style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                    color: AppColors.secondaryColor,
+                    color: AppColors.secondaryBackground,
                     fontWeight: FontWeight.w600,
                     fontSize:
                         fontSize ??
