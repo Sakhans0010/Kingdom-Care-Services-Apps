@@ -6,6 +6,7 @@ import 'package:kingdom_care_services_app/widgets/custom_country_code_picker.dar
 import 'package:kingdom_care_services_app/widgets/custom_material_button.dart';
 import 'package:kingdom_care_services_app/widgets/custom_network_image.dart';
 import 'package:kingdom_care_services_app/widgets/custom_text_form_field.dart';
+import 'package:kingdom_care_services_app/widgets/section_card.dart';
 
 class EditProfileScreen extends StatefulWidget {
   const EditProfileScreen({super.key});
@@ -58,21 +59,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           padding: const EdgeInsets.all(16),
           child: Column(
             children: [
-              Container(
-                width: double.infinity,
-                padding: const EdgeInsets.all(24),
-                margin: EdgeInsets.only(top: 10, bottom: 25),
-                decoration: BoxDecoration(
-                  color: AppColors.secondaryBackground,
-                  borderRadius: BorderRadius.circular(24),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withValues(alpha: .05),
-                      blurRadius: 8,
-                      offset: const Offset(0, 4),
-                    ),
-                  ],
-                ),
+              SectionCard(
                 child: Column(
                   children: [
                     Stack(
@@ -121,19 +108,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               ),
 
               // Personal Details
-              Container(
-                padding: const EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  color: AppColors.secondaryBackground,
-                  borderRadius: BorderRadius.circular(20),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withValues(alpha: .05),
-                      blurRadius: 5,
-                      offset: const Offset(0, 2),
-                    ),
-                  ],
-                ),
+              SectionCard(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -174,22 +149,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   ],
                 ),
               ),
-              const SizedBox(height: 24),
 
               // Documents
-              Container(
-                padding: const EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  color: AppColors.secondaryBackground,
-                  borderRadius: BorderRadius.circular(20),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withValues(alpha: .05),
-                      blurRadius: 5,
-                      offset: const Offset(0, 2),
-                    ),
-                  ],
-                ),
+              SectionCard(
                 child: Column(
                   children: [
                     Row(

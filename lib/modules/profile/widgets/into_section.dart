@@ -4,6 +4,7 @@
 import 'package:flutter/material.dart';
 import 'package:kingdom_care_services_app/constants/constants.dart';
 import 'package:kingdom_care_services_app/modules/profile/widgets/info_item.dart';
+import 'package:kingdom_care_services_app/widgets/section_card.dart';
 
 class InfoSection extends StatelessWidget {
   final String title;
@@ -19,18 +20,7 @@ class InfoSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: AppColors.secondaryBackground,
-        borderRadius: BorderRadius.circular(24),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: .05),
-            blurRadius: 6,
-            offset: const Offset(0, 3),
-          ),
-        ],
-      ),
+    return SectionCard(
       child: Column(
         children: [
           Container(

@@ -4,7 +4,8 @@ import 'package:shimmer/shimmer.dart';
 
 class CustomNetworkImage extends StatelessWidget {
   final String imageUrl;
-  final double size;
+  final double width;
+  final double height;
   final BoxShape shape;
   final double borderWidth;
   final Color borderColor;
@@ -13,7 +14,8 @@ class CustomNetworkImage extends StatelessWidget {
   const CustomNetworkImage({
     super.key,
     required this.imageUrl,
-    this.size = 100,
+    this.height = 100,
+    this.width = 100,
     this.shape = BoxShape.circle,
     this.borderWidth = 0,
     this.borderColor = AppColors.primaryColor,
@@ -28,12 +30,14 @@ class CustomNetworkImage extends StatelessWidget {
             placeholder: '',
             image: imageUrl,
             fit: fit,
+            height: height,
+            width: width,
             imageErrorBuilder: (context, error, stackTrace) =>
                 _buildPlaceholder(),
             placeholderErrorBuilder: (context, error, stackTrace) =>
                 _buildPlaceholder(),
-            placeholderCacheHeight: size.toInt(),
-            placeholderCacheWidth: size.toInt(),
+            placeholderCacheHeight: height.toInt(),
+            placeholderCacheWidth: width.toInt(),
           );
   }
 

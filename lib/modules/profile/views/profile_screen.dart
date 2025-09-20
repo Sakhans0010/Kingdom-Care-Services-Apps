@@ -41,8 +41,6 @@ class ProfileScreen extends StatelessWidget {
           children: [
             ProfileCard(),
 
-            const SizedBox(height: 24),
-
             // ------------------------
             // Personal Details Section
             // ------------------------
@@ -72,8 +70,6 @@ class ProfileScreen extends StatelessWidget {
                 ),
               ],
             ),
-
-            const SizedBox(height: 16),
 
             // ------------------------
             // Documents Section
@@ -123,8 +119,6 @@ class ProfileScreen extends StatelessWidget {
                 ),
               ],
             ),
-
-            const SizedBox(height: 16),
 
             // ------------------------
             // Settings Section
