@@ -1,12 +1,69 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:kingdom_care_services_app/constants/api_response_messages.dart';
 import 'package:kingdom_care_services_app/constants/constants.dart';
+import 'package:kingdom_care_services_app/modules/auth/providers/auth_provider.dart';
 import 'package:kingdom_care_services_app/modules/profile/widgets/info_item.dart';
 import 'package:kingdom_care_services_app/modules/profile/widgets/into_section.dart';
 import 'package:kingdom_care_services_app/modules/profile/widgets/profile_card.dart';
 import 'package:kingdom_care_services_app/routes/routes.dart';
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends ConsumerStatefulWidget {
   const ProfileScreen({super.key});
+
+  @override
+  ConsumerState<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends ConsumerState<ProfileScreen> {
+  // Logout
+  _logOut() async {
+    try {
+      EasyLoading.show();
+
+      var response = await ref.read(authProvider.notifier).logout();
+
+      // Dismiss loading
+      EasyLoading.dismiss();
+
+      // ✅ Ensure widget is still mounted before using context
+      if (!mounted) return;
+
+      // Show success or error message
+      Fluttertoast.showToast(
+        msg: response.isSuccess
+            ? response.message ?? ApiResponseMessages.loggedOutSuccessfully
+            : response.error ?? ApiResponseMessages.somethingWentWrong,
+
+        backgroundColor: response.isSuccess
+            ? null
+            : Theme.of(context).colorScheme.error,
+      );
+
+      // Navigate on success
+      if (response.isSuccess) {
+        Navigator.pushReplacementNamed(context, Routes.login);
+      }
+    } catch (e, st) {
+      // Dismiss loading
+      EasyLoading.dismiss();
+
+      // Log error
+      log("Logout error: $e\n$st");
+
+      if (!mounted) return;
+
+      // Show toast for unexpected errors
+      Fluttertoast.showToast(
+        msg: ApiResponseMessages.somethingWentWrong,
+        backgroundColor: Theme.of(context).colorScheme.error,
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -178,11 +235,12 @@ class ProfileScreen extends StatelessWidget {
                       borderRadius: BorderRadius.circular(16),
                     ),
                   ),
-                  onPressed: () {},
+                  onPressed: _logOut,
                   icon: const Icon(Icons.logout),
                   label: const Text("Logout"),
                 ),
               ),
+              const SizedBox(height: 10),
             ],
           ),
         ),

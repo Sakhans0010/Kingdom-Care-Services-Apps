@@ -9,6 +9,8 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:kingdom_care_services_app/constants/api_response_messages.dart';
 import 'package:kingdom_care_services_app/modules/auth/views/login_screen.dart';
 import 'package:kingdom_care_services_app/modules/main/main_screen.dart';
+import 'package:kingdom_care_services_app/modules/onboarding/views/onbaording_screen.dart';
+import 'package:kingdom_care_services_app/modules/route_decider/enums/routes_enums.dart';
 import 'package:kingdom_care_services_app/modules/route_decider/providers/route_decider.dart';
 import 'package:kingdom_care_services_app/modules/splash/splash_screen.dart';
 
@@ -45,8 +47,17 @@ class _RouteDeciderState extends ConsumerState<RouteDecider> {
     return ref
         .watch(routeDecider)
         .when(
-          data: (isLoggedIn) {
-            return isLoggedIn ? MainScreen() : LoginScreen();
+          data: (routeTo) {
+            switch (routeTo) {
+              case RouteTo.MainScreen:
+                return MainScreen();
+
+              case RouteTo.LoginScreen:
+                return LoginScreen();
+
+              case RouteTo.OnboardingScreen:
+                return OnboardingScreen();
+            }
           },
           error: (error, stackTrace) {
             log("Route Decider: $error");
