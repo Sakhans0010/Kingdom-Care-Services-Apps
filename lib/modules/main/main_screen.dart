@@ -34,7 +34,11 @@ class _MainScreenState extends State<MainScreen> {
       },
       child: Scaffold(
         // backgroundColor: AppColors.background,
-        body: SafeArea(child: _screens[_currentIndex]),
+        // appBar: AppBar(
+        //   backgroundColor: AppColors.secondaryBackground,
+        //   foregroundColor: AppColors.neutral900,
+        // ),
+        body: _screens[_currentIndex],
         bottomNavigationBar: CustomNavBar(
           currentIndex: _currentIndex,
           onItemTapped: _onItemTapped,

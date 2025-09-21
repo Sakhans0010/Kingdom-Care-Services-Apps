@@ -31,7 +31,11 @@ class ProfileScreen extends StatelessWidget {
             onPressed: () {
               Navigator.pushNamed(context, Routes.editProfileScreen);
             },
-            icon: Icon(Icons.settings, color: AppColors.textColor, size: 28),
+            icon: Icon(
+              Icons.settings,
+              color: AppColors.textpPrimaryColor,
+              size: 28,
+            ),
           ),
         ],
       ),
@@ -40,7 +44,7 @@ class ProfileScreen extends StatelessWidget {
         child: Column(
           children: [
             ProfileCard(),
-
+            SizedBox(height: 30),
             // ------------------------
             // Personal Details Section
             // ------------------------

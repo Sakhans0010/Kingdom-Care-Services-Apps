@@ -95,7 +95,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       style: TextStyle(
                         fontSize: 22,
                         fontWeight: FontWeight.w500,
-                        color: AppColors.textColor,
+                        color: AppColors.textpPrimaryColor,
                       ),
                     ),
                     Text(

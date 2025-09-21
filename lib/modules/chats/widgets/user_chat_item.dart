@@ -44,29 +44,9 @@ class UserChatItem extends StatelessWidget {
           // boxShadow: const [BoxShadow(color: Colors.black12, blurRadius: 2)],
         ),
         child: Row(
+          // crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Stack(
-              children: [
-                CircleAvatar(
-                  radius: 28,
-                  backgroundImage: NetworkImage(imageUrl),
-                ),
-                if (isOnline)
-                  Positioned(
-                    bottom: 0,
-                    right: 0,
-                    child: Container(
-                      width: 14,
-                      height: 14,
-                      decoration: BoxDecoration(
-                        color: Colors.green,
-                        shape: BoxShape.circle,
-                        border: Border.all(color: Colors.white, width: 2),
-                      ),
-                    ),
-                  ),
-              ],
-            ),
+            _buildUserAvatar(),
             const SizedBox(width: 12),
             Expanded(
               child: Column(
@@ -75,55 +55,58 @@ class UserChatItem extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        name,
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Color(0xFF1C1C1E),
-                        ),
-                      ),
+                      Text(name, style: Theme.of(context).textTheme.bodyMedium),
                       Text(
                         time,
-                        style: TextStyle(
+                        style: Theme.of(context).textTheme.bodySmall!.copyWith(
                           color: unreadCount > 0
-                              ? const Color(0xFFFF4D4D)
-                              : const Color(0xFF6C757D),
-                          fontSize: 12,
-                          fontWeight: FontWeight.w500,
+                              ? AppColors.primaryColor
+                              : AppColors.neutral500,
+                          fontSize: 14,
+                          fontWeight: unreadCount > 0
+                              ? FontWeight.bold
+                              : FontWeight.w500,
                         ),
                       ),
                     ],
                   ),
                   const SizedBox(height: 4),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  Stack(
+                    clipBehavior: Clip.none,
+                    // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Expanded(
-                        child: Text(
-                          lastMessage,
-                          style: TextStyle(
-                            color: unreadCount > 0
-                                ? const Color(0xFF1C1C1E)
-                                : const Color(0xFF6C757D),
-                            fontWeight: unreadCount > 0
-                                ? FontWeight.w500
-                                : FontWeight.normal,
-                          ),
-                          overflow: TextOverflow.ellipsis,
+                      Text(
+                        lastMessage,
+                        style: Theme.of(context).textTheme.labelLarge!.copyWith(
+                          fontSize: 15,
+                          color: unreadCount > 0
+                              ? AppColors.textpPrimaryColor
+                              : AppColors.neutral500,
+                          fontWeight: unreadCount > 0
+                              ? FontWeight.w500
+                              : FontWeight.normal,
                         ),
+
+                        overflow: TextOverflow.ellipsis,
                       ),
                       if (unreadCount > 0)
-                        Container(
-                          padding: const EdgeInsets.all(6),
-                          decoration: BoxDecoration(
-                            color: const Color(0xFFFF4D4D),
-                            shape: BoxShape.circle,
-                          ),
-                          child: Text(
-                            unreadCount.toString(),
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 12,
+                        Positioned(
+                          bottom: -5,
+                          right: -35,
+                          child: Container(
+                            padding: const EdgeInsets.all(6),
+                            decoration: BoxDecoration(
+                              color: AppColors.error,
+
+                              shape: BoxShape.circle,
+                            ),
+                            child: Text(
+                              unreadCount.toString(),
+                              style: Theme.of(context).textTheme.labelSmall!
+                                  .copyWith(
+                                    color: AppColors.secondaryBackground,
+                                    fontSize: 13,
+                                  ),
                             ),
                           ),
                         ),
@@ -135,6 +118,28 @@ class UserChatItem extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+
+  Stack _buildUserAvatar() {
+    return Stack(
+      children: [
+        CircleAvatar(radius: 28, backgroundImage: NetworkImage(imageUrl)),
+        if (isOnline)
+          Positioned(
+            bottom: 0,
+            right: 0,
+            child: Container(
+              width: 14,
+              height: 14,
+              decoration: BoxDecoration(
+                color: Colors.green,
+                shape: BoxShape.circle,
+                border: Border.all(color: Colors.white, width: 2),
+              ),
+            ),
+          ),
+      ],
     );
   }
 }

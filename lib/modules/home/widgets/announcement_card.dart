@@ -22,9 +22,9 @@ class AnnouncementCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: AppColors.neutral200.withOpacity(0.6),
-            blurRadius: 4,
-            offset: const Offset(0, 2),
+            color: Colors.black.withValues(alpha: .05),
+            blurRadius: 8,
+            offset: const Offset(0, 4),
           ),
         ],
       ),
@@ -47,16 +47,17 @@ class AnnouncementCard extends StatelessWidget {
               children: [
                 Text(
                   title,
-                  style: TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.w600,
-                    color: AppColors.neutral900,
-                  ),
+                  style: Theme.of(
+                    context,
+                  ).textTheme.bodyMedium!.copyWith(fontSize: 15),
                 ),
                 const SizedBox(height: 4),
                 Text(
                   description,
-                  style: TextStyle(fontSize: 13, color: AppColors.neutral500),
+                  style: Theme.of(
+                    context,
+                  ).textTheme.bodySmall!.copyWith(color: AppColors.neutral700),
+                  // TextStyle(fontSize: 13, color: AppColors.neutral500),
                 ),
               ],
             ),

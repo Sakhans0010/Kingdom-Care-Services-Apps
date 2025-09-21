@@ -56,7 +56,8 @@ class AppColors {
   static const Color borderColor2 = Color(0xFFDBE1E6);
 
   // Added from HTML design
-  static const Color textColor = Color(0xFF1F2937);
+  static const Color textpPrimaryColor = Color(0xFF1F2937);
+  static const Color textSecondaryColor = Color(0xFF1F2937);
   static const Color darkGrey = Color(0xFF4B5563);
   static const Color accentColor = Color(0xFF3B82F6);
 }

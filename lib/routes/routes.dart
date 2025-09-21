@@ -15,6 +15,7 @@ import 'package:kingdom_care_services_app/modules/profile/views/edit_profile_scr
 import 'package:kingdom_care_services_app/modules/route_decider/views/route_decider.dart';
 import 'package:kingdom_care_services_app/modules/shifts/views/map_details_screen.dart';
 import 'package:kingdom_care_services_app/modules/shifts/views/shift_details_screen.dart';
+import 'package:kingdom_care_services_app/modules/shifts/views/shift_in_progress.dart';
 
 class Routes {
   static const String login = "login";
@@ -23,6 +24,7 @@ class Routes {
   static const String home = "home";
   static const String availabilityScheduler = "availabilityScheduler";
   static const String shiftDetailsScreen = "shiftDetailsScreen";
+  static const String shiftInProgressScreen = "shiftInProgressScreen";
   static const String mapDetailsScreen = "mapDetailsScreen";
   static const String forgotPassword = "forgotPassword";
   static const String editProfileScreen = "editProfileScreen";
@@ -55,6 +57,8 @@ class Routes {
         return MaterialPageRoute(
           builder: (_) => ShiftDetailsScreen(shift: data),
         );
+      case shiftInProgressScreen:
+        return MaterialPageRoute(builder: (_) => ShiftInProgressScreen());
       case mapDetailsScreen:
         var data = settings.arguments as ShiftItem;
         return MaterialPageRoute(builder: (_) => MapDetailsScreen(shift: data));

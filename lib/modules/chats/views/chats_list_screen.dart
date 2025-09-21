@@ -8,7 +8,9 @@ class ChatsListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // backgroundColor: AppColors.secondaryBackground,
       appBar: AppBar(
+        backgroundColor: AppColors.secondaryBackground,
         foregroundColor: AppColors.neutral900,
         title: Text(
           'Chats',
@@ -24,7 +26,8 @@ class ChatsListScreen extends StatelessWidget {
           ),
         ],
       ),
-      body: Padding(
+      body: Container(
+        color: AppColors.background,
         padding: const EdgeInsets.all(16),
         child: ListView(
           children: [
