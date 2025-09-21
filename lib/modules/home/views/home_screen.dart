@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:kingdom_care_services_app/constants/constants.dart';
-import 'package:kingdom_care_services_app/main.dart';
 import 'package:kingdom_care_services_app/modules/home/widgets/analytics_card.dart';
 import 'package:kingdom_care_services_app/modules/home/widgets/announcement_card.dart';
 import 'package:kingdom_care_services_app/modules/home/widgets/current_shift_card.dart';
 import 'package:kingdom_care_services_app/modules/home/widgets/next_shift_card.dart';
 import 'package:kingdom_care_services_app/modules/home/widgets/quick_action.dart';
-import 'package:kingdom_care_services_app/routes/routes.dart';
 import 'package:kingdom_care_services_app/widgets/custom_network_image.dart';
+import 'package:kingdom_care_services_app/widgets/notification_button.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -158,37 +157,11 @@ class HomeScreen extends StatelessWidget {
           ),
         ],
       ),
-      actions: [
-        InkWell(
-          onTap: () {
-            Navigator.pushNamed(
-              navigatorKey.currentState!.context,
-              Routes.notificationsScreen,
-            );
-          },
-          borderRadius: BorderRadius.circular(100),
-          child: Stack(
-            children: [
-              Icon(Icons.notifications, color: AppColors.neutral700, size: 28),
-              Positioned(
-                right: 0,
-                top: 2,
-                child: Container(
-                  width: 8,
-                  height: 8,
-                  decoration: const BoxDecoration(
-                    color: AppColors.error,
-                    shape: BoxShape.circle,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ],
+      actions: [NotificationButton()],
     );
   }
 }
+
 
 
 

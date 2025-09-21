@@ -3,7 +3,7 @@ import 'package:kingdom_care_services_app/constants/constants.dart';
 import 'package:kingdom_care_services_app/modules/shifts/widgets/available_shifts.dart';
 import 'package:kingdom_care_services_app/modules/shifts/widgets/completed_shifts.dart';
 import 'package:kingdom_care_services_app/modules/shifts/widgets/upcoming_shifts.dart';
-import 'package:kingdom_care_services_app/widgets/title_section_row.dart';
+import 'package:kingdom_care_services_app/widgets/notification_button.dart';
 
 class ShiftsScreen extends StatefulWidget {
   const ShiftsScreen({super.key});
@@ -30,34 +30,23 @@ class _ShiftsScreenState extends State<ShiftsScreen>
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: AppColors.secondaryBackground,
+        foregroundColor: AppColors.neutral900,
 
-      child: Column(
+        title: Text(
+          "Shifts",
+          style: Theme.of(
+            context,
+          ).textTheme.titleMedium!.copyWith(fontSize: 22),
+        ),
+        actionsPadding: EdgeInsets.only(right: 17),
+        actions: [NotificationButton()],
+      ),
+      body: Column(
         children: [
-          TitleSectionRow(title: "Shifts"),
-          SizedBox(height: 20),
-          SizedBox(
-            height: 50,
-            child: TabBar(
-              controller: _tabController,
-              labelColor: Colors.white, // text color for selected
-              unselectedLabelColor: Colors.black, // text color for unselected
-              indicatorSize: TabBarIndicatorSize.tab,
-              indicator: BoxDecoration(
-                color: AppColors.primaryColor,
-                borderRadius: BorderRadius.circular(100),
-              ),
-              dividerColor: Colors.transparent,
-              splashBorderRadius: BorderRadius.circular(100),
-              labelStyle: Theme.of(context).textTheme.bodyMedium,
-              tabs: [
-                Tab(text: "Available"),
-                Tab(text: "Upcoming"),
-                Tab(text: "Past"),
-              ],
-            ),
-          ),
+          _buildTabBar(context),
           SizedBox(height: 20),
           Expanded(
             child: TabBarView(
@@ -69,6 +58,32 @@ class _ShiftsScreenState extends State<ShiftsScreen>
               ],
             ),
           ),
+        ],
+      ),
+    );
+  }
+
+  Container _buildTabBar(BuildContext context) {
+    return Container(
+      color: AppColors.secondaryBackground,
+      height: 70,
+      padding: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+      child: TabBar(
+        controller: _tabController,
+        labelColor: Colors.white, // text color for selected
+        unselectedLabelColor: Colors.black, // text color for unselected
+        indicatorSize: TabBarIndicatorSize.tab,
+        indicator: BoxDecoration(
+          color: AppColors.primaryColor,
+          borderRadius: BorderRadius.circular(100),
+        ),
+        dividerColor: Colors.transparent,
+        splashBorderRadius: BorderRadius.circular(100),
+        labelStyle: Theme.of(context).textTheme.bodyMedium,
+        tabs: [
+          Tab(text: "Available"),
+          Tab(text: "Upcoming"),
+          Tab(text: "Past"),
         ],
       ),
     );
