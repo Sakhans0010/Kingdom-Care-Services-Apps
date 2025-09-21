@@ -22,6 +22,7 @@ class CustomNavBar extends StatelessWidget {
       backgroundColor: AppColors.secondaryBackground,
       showSelectedLabels: false,
       showUnselectedLabels: false,
+
       items: [
         _buildTabItem(icon: AppImages.HOME, index: 0),
         _buildTabItem(icon: AppImages.CALENDER, index: 1),

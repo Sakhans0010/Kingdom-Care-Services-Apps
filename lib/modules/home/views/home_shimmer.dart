@@ -5,6 +5,89 @@ import 'package:shimmer/shimmer.dart';
 class HomeShimmer extends StatelessWidget {
   const HomeShimmer({super.key});
 
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: SafeArea(
+        child: Shimmer.fromColors(
+          baseColor: AppColors.secondaryBackground,
+          highlightColor: Colors.grey.shade200,
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Header
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        _buildShimmerCircle(size: 48),
+                        const SizedBox(width: 12),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            _buildShimmerBox(width: 100, height: 14),
+                            const SizedBox(height: 6),
+                            _buildShimmerBox(width: 80, height: 12),
+                          ],
+                        ),
+                      ],
+                    ),
+                    _buildShimmerCircle(size: 32),
+                  ],
+                ),
+                const SizedBox(height: 24),
+
+                // Current Shift card
+                _buildCard(height: 140),
+                const SizedBox(height: 24),
+
+                // Quick Actions
+                _buildShimmerBox(width: 120, height: 16, radius: 6),
+                const SizedBox(height: 12),
+                Row(
+                  children: [
+                    Expanded(child: _buildQuickAction()),
+                    const SizedBox(width: 12),
+                    Expanded(child: _buildQuickAction()),
+                  ],
+                ),
+                const SizedBox(height: 24),
+
+                // Analytics
+                _buildShimmerBox(width: 120, height: 16, radius: 6),
+                const SizedBox(height: 12),
+                Column(
+                  children: [
+                    _buildCard(height: 80),
+                    const SizedBox(height: 12),
+                    _buildCard(height: 80),
+                    const SizedBox(height: 12),
+                    _buildCard(height: 80),
+                  ],
+                ),
+                const SizedBox(height: 24),
+
+                // Announcements
+                _buildShimmerBox(width: 160, height: 16, radius: 6),
+                const SizedBox(height: 12),
+                Column(
+                  children: [
+                    _buildAnnouncementRow(),
+                    const SizedBox(height: 12),
+                    _buildAnnouncementRow(),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
   Widget _buildShimmerBox({
     double width = double.infinity,
     double height = 16,
@@ -94,89 +177,6 @@ class HomeShimmer extends StatelessWidget {
             ),
           ),
         ],
-      ),
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: Shimmer.fromColors(
-          baseColor: AppColors.secondaryBackground,
-          highlightColor: Colors.grey.shade200,
-          child: SingleChildScrollView(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // Header
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: [
-                        _buildShimmerCircle(size: 48),
-                        const SizedBox(width: 12),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            _buildShimmerBox(width: 100, height: 14),
-                            const SizedBox(height: 6),
-                            _buildShimmerBox(width: 80, height: 12),
-                          ],
-                        ),
-                      ],
-                    ),
-                    _buildShimmerCircle(size: 32),
-                  ],
-                ),
-                const SizedBox(height: 24),
-
-                // Current Shift card
-                _buildCard(height: 140),
-                const SizedBox(height: 24),
-
-                // Quick Actions
-                _buildShimmerBox(width: 120, height: 16, radius: 6),
-                const SizedBox(height: 12),
-                Row(
-                  children: [
-                    Expanded(child: _buildQuickAction()),
-                    const SizedBox(width: 12),
-                    Expanded(child: _buildQuickAction()),
-                  ],
-                ),
-                const SizedBox(height: 24),
-
-                // Analytics
-                _buildShimmerBox(width: 120, height: 16, radius: 6),
-                const SizedBox(height: 12),
-                Column(
-                  children: [
-                    _buildCard(height: 80),
-                    const SizedBox(height: 12),
-                    _buildCard(height: 80),
-                    const SizedBox(height: 12),
-                    _buildCard(height: 80),
-                  ],
-                ),
-                const SizedBox(height: 24),
-
-                // Announcements
-                _buildShimmerBox(width: 160, height: 16, radius: 6),
-                const SizedBox(height: 12),
-                Column(
-                  children: [
-                    _buildAnnouncementRow(),
-                    const SizedBox(height: 12),
-                    _buildAnnouncementRow(),
-                  ],
-                ),
-              ],
-            ),
-          ),
-        ),
       ),
     );
   }
