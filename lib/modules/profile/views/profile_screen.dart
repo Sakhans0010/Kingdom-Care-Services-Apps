@@ -12,10 +12,9 @@ class ProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     // return ProfileShimmer();
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: AppColors.secondaryBackground,
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
-
+        backgroundColor: AppColors.secondaryBackground,
         foregroundColor: AppColors.neutral900,
 
         title: Text(
@@ -39,150 +38,153 @@ class ProfileScreen extends StatelessWidget {
           ),
         ],
       ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-        child: Column(
-          children: [
-            ProfileCard(),
-            SizedBox(height: 30),
-            // ------------------------
-            // Personal Details Section
-            // ------------------------
-            InfoSection(
-              title: "Personal Details",
-              items: [
-                InfoItem(
-                  icon: Icons.mail,
-                  iconBgColor: AppColors.secondaryColor,
-                  iconColor: AppColors.primaryColor,
-                  title: "Email",
-                  subtitle: "sophia.carter@email.com",
-                ),
-                InfoItem(
-                  icon: Icons.call,
-                  iconBgColor: AppColors.secondaryColor,
-                  iconColor: AppColors.primaryColor,
-                  title: "Phone",
-                  subtitle: "+1 (555) 123-4567",
-                ),
-                InfoItem(
-                  icon: Icons.location_on,
-                  iconBgColor: AppColors.secondaryColor,
-                  iconColor: AppColors.primaryColor,
-                  title: "Address",
-                  subtitle: "123 Main St, Anytown, USA",
-                ),
-              ],
-            ),
+      body: Container(
+        color: AppColors.background,
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          child: Column(
+            children: [
+              ProfileCard(),
+              SizedBox(height: 30),
+              // ------------------------
+              // Personal Details Section
+              // ------------------------
+              InfoSection(
+                title: "Personal Details",
+                items: [
+                  InfoItem(
+                    icon: Icons.mail,
+                    iconBgColor: AppColors.secondaryColor,
+                    iconColor: AppColors.primaryColor,
+                    title: "Email",
+                    subtitle: "sophia.carter@email.com",
+                  ),
+                  InfoItem(
+                    icon: Icons.call,
+                    iconBgColor: AppColors.secondaryColor,
+                    iconColor: AppColors.primaryColor,
+                    title: "Phone",
+                    subtitle: "+1 (555) 123-4567",
+                  ),
+                  InfoItem(
+                    icon: Icons.location_on,
+                    iconBgColor: AppColors.secondaryColor,
+                    iconColor: AppColors.primaryColor,
+                    title: "Address",
+                    subtitle: "123 Main St, Anytown, USA",
+                  ),
+                ],
+              ),
 
-            // ------------------------
-            // Documents Section
-            // ------------------------
-            InfoSection(
-              title: "Documents",
-              optionalButton: TextButton(
-                onPressed: () {
-                  Navigator.pushNamed(
-                    context,
-                    Routes.documentsManagementScreen,
-                  );
-                },
-                style: TextButton.styleFrom(
-                  backgroundColor: AppColors.secondaryColor,
-                  foregroundColor: AppColors.primaryColor,
-                  textStyle: Theme.of(context).textTheme.bodySmall,
-                ),
+              // ------------------------
+              // Documents Section
+              // ------------------------
+              InfoSection(
+                title: "Documents",
+                optionalButton: TextButton(
+                  onPressed: () {
+                    Navigator.pushNamed(
+                      context,
+                      Routes.documentsManagementScreen,
+                    );
+                  },
+                  style: TextButton.styleFrom(
+                    backgroundColor: AppColors.secondaryColor,
+                    foregroundColor: AppColors.primaryColor,
+                    textStyle: Theme.of(context).textTheme.bodySmall,
+                  ),
 
-                // icon: const Icon(Icons.add, size: 18),
-                child: Text(
-                  "View All",
-                  // style: Theme.of(context).textTheme.bodySmall!,
+                  // icon: const Icon(Icons.add, size: 18),
+                  child: Text(
+                    "View All",
+                    // style: Theme.of(context).textTheme.bodySmall!,
+                  ),
+                ),
+                items: [
+                  InfoItem(
+                    icon: Icons.description,
+                    iconBgColor: AppColors.secondaryColor,
+                    iconColor: AppColors.primaryColor,
+                    title: "Background Check",
+                    trailing: Icon(Icons.check_circle, color: Colors.green),
+                  ),
+                  InfoItem(
+                    icon: Icons.description,
+                    iconBgColor: AppColors.secondaryColor,
+                    iconColor: AppColors.primaryColor,
+                    title: "Certification",
+                    trailing: Icon(Icons.check_circle, color: Colors.green),
+                  ),
+                  InfoItem(
+                    icon: Icons.description,
+                    iconBgColor: AppColors.secondaryColor,
+                    iconColor: AppColors.primaryColor,
+                    title: "Resume",
+                    trailing: Icon(Icons.check_circle, color: Colors.green),
+                  ),
+                ],
+              ),
+
+              // ------------------------
+              // Settings Section
+              // ------------------------
+              InfoSection(
+                title: "Settings",
+                items: [
+                  InfoItem(
+                    icon: Icons.notifications,
+                    iconBgColor: AppColors.secondaryColor,
+                    iconColor: AppColors.primaryColor,
+                    title: "Notifications",
+                    trailing: Switch(
+                      value: true,
+                      onChanged: (val) {},
+                      activeThumbColor: AppColors.secondaryBackground,
+                      activeTrackColor: AppColors.primaryColor,
+                    ),
+                  ),
+                  InfoItem(
+                    icon: Icons.dark_mode,
+                    iconBgColor: AppColors.secondaryColor,
+                    iconColor: AppColors.primaryColor,
+                    title: "Dark Mode",
+                    trailing: Switch(
+                      value: false,
+                      onChanged: (val) {},
+                      activeThumbColor: AppColors.secondaryBackground,
+                      activeTrackColor: AppColors.primaryColor,
+                    ),
+                  ),
+                ],
+              ),
+
+              const SizedBox(height: 16),
+
+              // ------------------------
+              // Logout Button
+              // ------------------------
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton.icon(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.red.shade100,
+                    foregroundColor: Colors.red.shade600,
+                    padding: const EdgeInsets.symmetric(vertical: 14),
+                    textStyle: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                    ),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                  ),
+                  onPressed: () {},
+                  icon: const Icon(Icons.logout),
+                  label: const Text("Logout"),
                 ),
               ),
-              items: [
-                InfoItem(
-                  icon: Icons.description,
-                  iconBgColor: AppColors.secondaryColor,
-                  iconColor: AppColors.primaryColor,
-                  title: "Background Check",
-                  trailing: Icon(Icons.check_circle, color: Colors.green),
-                ),
-                InfoItem(
-                  icon: Icons.description,
-                  iconBgColor: AppColors.secondaryColor,
-                  iconColor: AppColors.primaryColor,
-                  title: "Certification",
-                  trailing: Icon(Icons.check_circle, color: Colors.green),
-                ),
-                InfoItem(
-                  icon: Icons.description,
-                  iconBgColor: AppColors.secondaryColor,
-                  iconColor: AppColors.primaryColor,
-                  title: "Resume",
-                  trailing: Icon(Icons.check_circle, color: Colors.green),
-                ),
-              ],
-            ),
-
-            // ------------------------
-            // Settings Section
-            // ------------------------
-            InfoSection(
-              title: "Settings",
-              items: [
-                InfoItem(
-                  icon: Icons.notifications,
-                  iconBgColor: AppColors.secondaryColor,
-                  iconColor: AppColors.primaryColor,
-                  title: "Notifications",
-                  trailing: Switch(
-                    value: true,
-                    onChanged: (val) {},
-                    activeThumbColor: AppColors.secondaryBackground,
-                    activeTrackColor: AppColors.primaryColor,
-                  ),
-                ),
-                InfoItem(
-                  icon: Icons.dark_mode,
-                  iconBgColor: AppColors.secondaryColor,
-                  iconColor: AppColors.primaryColor,
-                  title: "Dark Mode",
-                  trailing: Switch(
-                    value: false,
-                    onChanged: (val) {},
-                    activeThumbColor: AppColors.secondaryBackground,
-                    activeTrackColor: AppColors.primaryColor,
-                  ),
-                ),
-              ],
-            ),
-
-            const SizedBox(height: 16),
-
-            // ------------------------
-            // Logout Button
-            // ------------------------
-            SizedBox(
-              width: double.infinity,
-              child: ElevatedButton.icon(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.red.shade100,
-                  foregroundColor: Colors.red.shade600,
-                  padding: const EdgeInsets.symmetric(vertical: 14),
-                  textStyle: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16,
-                  ),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(16),
-                  ),
-                ),
-                onPressed: () {},
-                icon: const Icon(Icons.logout),
-                label: const Text("Logout"),
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

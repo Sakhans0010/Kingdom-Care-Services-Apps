@@ -25,7 +25,8 @@ class InfoSection extends StatelessWidget {
         children: [
           Container(
             width: double.infinity,
-            padding: const EdgeInsets.all(16),
+            padding: const EdgeInsets.only(bottom: 10),
+            margin: const EdgeInsets.only(bottom: 10),
             decoration: BoxDecoration(
               border: Border(bottom: BorderSide(color: AppColors.borderColor)),
             ),
