@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kingdom_care_services_app/constants/constants.dart';
-import 'package:kingdom_care_services_app/modules/notifications/views/notifications_shimmer.dart';
+import 'package:kingdom_care_services_app/modules/notifications/widgets/notifications_list.dart';
 
 class NotificationsScreen extends StatelessWidget {
   const NotificationsScreen({super.key});
@@ -20,8 +20,7 @@ class NotificationsScreen extends StatelessWidget {
           ).textTheme.titleMedium!.copyWith(fontSize: 22),
         ),
       ),
-      body: NotificationsShimmer(),
-      //  NotificationsList(),
+      body: NotificationsList(),
     );
   }
 }
