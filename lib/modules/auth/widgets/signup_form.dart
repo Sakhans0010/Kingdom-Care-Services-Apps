@@ -1,14 +1,15 @@
 import 'dart:developer';
 
-import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'package:kingdom_care_services_app/constants/api_response_messages.dart';
+import 'package:kingdom_care_services_app/constants/constants.dart';
 import 'package:kingdom_care_services_app/modules/auth/providers/auth_provider.dart';
 import 'package:kingdom_care_services_app/routes/routes.dart';
+import 'package:kingdom_care_services_app/widgets/custom_country_code_picker.dart';
 // import 'package:form_validator/form_validator.dart';
 import 'package:kingdom_care_services_app/widgets/custom_material_button.dart';
 import 'package:kingdom_care_services_app/widgets/custom_text_form_field.dart';
@@ -63,7 +64,7 @@ class _SignupFormState extends ConsumerState<SignupForm> {
           .signup(
             firstName: firstNameController.text.trim(),
             lastName: lastNameController.text.trim(),
-            email: emailController.text.trim(),
+            email: emailController.text.toLowerCase().trim(),
             password: passwordController.text.trim(),
             dateOfBirth: dobController.text.trim(),
             phone: phoneController.text.trim(),
@@ -125,7 +126,7 @@ class _SignupFormState extends ConsumerState<SignupForm> {
         return Theme(
           data: ThemeData.light().copyWith(
             colorScheme: const ColorScheme.light(
-              primary: Colors.deepPurple,
+              primary: AppColors.primaryColor,
               onPrimary: Colors.white,
               onSurface: Colors.black,
             ),
@@ -159,37 +160,50 @@ class _SignupFormState extends ConsumerState<SignupForm> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          CustomTextField(
-            controller: firstNameController,
-            label: "First Name",
-            onValidate: (value) {
-              if (value == null || value.isEmpty) {
-                return "First name is required!";
-              }
-              if (value.length < 2) {
-                return "First name must be at least 2 characters";
-              }
-              return null;
-            },
+          // First + Last Name
+          Row(
+            children: [
+              Expanded(
+                child: CustomTextField(
+                  controller: firstNameController,
+                  hint: "First Name",
+                  prefixIcon: Icons.person_outline,
+                  onValidate: (value) {
+                    if (value == null || value.isEmpty) {
+                      return "First name is required!";
+                    }
+                    if (value.length < 2) {
+                      return "First name must be at least 2 characters";
+                    }
+                    return null;
+                  },
+                ),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: CustomTextField(
+                  controller: lastNameController,
+                  hint: "Last Name",
+                  prefixIcon: Icons.person_outline,
+                  onValidate: (value) {
+                    if (value == null || value.isEmpty) {
+                      return "Last name is required!";
+                    }
+                    if (value.length < 2) {
+                      return "Last name must be at least 2 characters";
+                    }
+                    return null;
+                  },
+                ),
+              ),
+            ],
           ),
-          SizedBox(height: 10),
-          CustomTextField(
-            controller: lastNameController,
-            label: "Last Name",
-            onValidate: (value) {
-              if (value == null || value.isEmpty) {
-                return "Last name is required!";
-              }
-              if (value.length < 2) {
-                return "Last name must be at least 2 characters";
-              }
-              return null;
-            },
-          ),
+
           SizedBox(height: 10),
           CustomTextField(
             controller: emailController,
             keyBoardType: TextInputType.emailAddress,
+            prefixIcon: Icons.mail_outline,
             label: "Email",
             onValidate: (value) {
               if (value == null || value.isEmpty) {
@@ -206,7 +220,7 @@ class _SignupFormState extends ConsumerState<SignupForm> {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              CountryCodePicker(
+              CustomCountryCodePicker(
                 onChanged: (code) {
                   selectedCountry = {
                     'code': code.dialCode!,
@@ -219,25 +233,16 @@ class _SignupFormState extends ConsumerState<SignupForm> {
                 favorite: [
                   selectedCountry['code']!,
                   selectedCountry['countryCode']!,
-                ], // Optional favorites
-
-                padding: EdgeInsetsGeometry.symmetric(vertical: 8),
-                showCountryOnly: false, // Show country name with flag
-                showOnlyCountryWhenClosed: false,
-                alignLeft: false,
-                margin: const EdgeInsets.symmetric(horizontal: 6),
-                comparator: (a, b) => b.name!.compareTo(a.name!),
-
-                flagDecoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(2),
-                ),
+                ],
               ),
 
+              SizedBox(width: 15),
               Expanded(
                 child: CustomTextField(
                   controller: phoneController,
                   label: "Phone",
                   keyBoardType: TextInputType.phone,
+                  prefixIcon: Icons.phone_outlined,
                   onValidate: (value) {
                     if (value == null || value.isEmpty) {
                       return "Phone number is required";
@@ -255,39 +260,46 @@ class _SignupFormState extends ConsumerState<SignupForm> {
             ],
           ),
           SizedBox(height: 10),
-          CustomTextField(
-            controller: dobController,
-            label: "Date of Birth",
-            readOnly: true,
+
+          GestureDetector(
             onTap: () => _pickDate(context),
+            child: AbsorbPointer(
+              child: CustomTextField(
+                controller: dobController,
+                label: "Date of Birth",
+                prefixIcon: Icons.calendar_today_outlined,
+                readOnly: true,
+                onTap: () => _pickDate(context),
 
-            suffixIcon: const Icon(Icons.calendar_today),
+                suffixIcon: const Icon(Icons.calendar_today),
 
-            onValidate: (value) {
-              if (value == null || value.isEmpty) {
-                return "Please select your date of birth!";
-              }
+                onValidate: (value) {
+                  if (value == null || value.isEmpty) {
+                    return "Please select your date of birth!";
+                  }
 
-              try {
-                // Parse String -> DateTime
-                final dob = DateFormat("dd-MM-yyyy").parseStrict(value);
+                  try {
+                    // Parse String -> DateTime
+                    final dob = DateFormat("dd-MM-yyyy").parseStrict(value);
 
-                final today = DateTime.now();
-                final eighteenYearsAgo = DateTime(
-                  today.year - 18,
-                  today.month,
-                  today.day,
-                );
+                    final today = DateTime.now();
+                    final eighteenYearsAgo = DateTime(
+                      today.year - 18,
+                      today.month,
+                      today.day,
+                    );
 
-                if (dob.isAfter(eighteenYearsAgo)) {
-                  return "You must be at least 18 years old";
-                }
-              } catch (e) {
-                return "Invalid date format";
-              }
+                    if (dob.isAfter(eighteenYearsAgo)) {
+                      return "You must be at least 18 years old";
+                    }
+                  } catch (e) {
+                    return "Invalid date format";
+                  }
 
-              return null;
-            },
+                  return null;
+                },
+              ),
+            ),
           ),
 
           SizedBox(height: 10),
@@ -300,7 +312,9 @@ class _SignupFormState extends ConsumerState<SignupForm> {
                     controller: passwordController,
                     keyBoardType: TextInputType.visiblePassword,
                     label: "Password",
-                    obscureText: isVisible,
+                    prefixIcon: Icons.lock_outline,
+
+                    obscureText: !isVisible,
                     isVisible: isVisible,
                     onSuffixTapped: () {
                       setState(() {
@@ -323,7 +337,9 @@ class _SignupFormState extends ConsumerState<SignupForm> {
                     controller: confirmPasswordController,
                     keyBoardType: TextInputType.visiblePassword,
                     label: "Confirm Password",
-                    obscureText: isVisible,
+                    prefixIcon: Icons.lock_outline,
+
+                    obscureText: !isVisible,
                     isVisible: isVisible,
                     onSuffixTapped: () {
                       setState(() {

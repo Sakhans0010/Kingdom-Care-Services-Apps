@@ -27,14 +27,14 @@ class CustomMaterialButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final primaryColor = Theme.of(context).colorScheme.primary;
+    final primaryColor = AppColors.primaryColor;
     final whiteColor = Theme.of(context).colorScheme.onPrimary;
     return SizedBox(
       width: width,
       height: height,
       child: MaterialButton(
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: BorderRadius.circular(14),
           side: !isBordered
               ? BorderSide.none
               : BorderSide(color: color ?? primaryColor, width: 1.5),
@@ -55,7 +55,7 @@ class CustomMaterialButton extends StatelessWidget {
                   text,
                   textAlign: TextAlign.center,
                   style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                    color: AppColors.secondaryColor,
+                    color: AppColors.secondaryBackground,
                     fontWeight: FontWeight.w600,
                     fontSize:
                         fontSize ??

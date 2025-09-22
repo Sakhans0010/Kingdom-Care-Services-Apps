@@ -53,6 +53,8 @@ dependencies:
   # UI
   flutter_easyloading: ^3.0.5
   fluttertoast: ^8.2.12
+  cached_network_image: ^3.4.1
+  shimmer: ^3.0.0
 
 
 

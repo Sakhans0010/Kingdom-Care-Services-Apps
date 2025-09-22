@@ -17,11 +17,12 @@ class CustomNavBar extends StatelessWidget {
       currentIndex: currentIndex,
       onTap: onItemTapped,
       type: BottomNavigationBarType.fixed,
-      selectedItemColor: Colors.blue,
-      unselectedItemColor: Colors.grey,
-      backgroundColor: AppColors.background,
+      selectedItemColor: AppColors.primaryColor,
+      unselectedItemColor: AppColors.neutral500,
+      backgroundColor: AppColors.secondaryBackground,
       showSelectedLabels: false,
       showUnselectedLabels: false,
+
       items: [
         _buildTabItem(icon: AppImages.HOME, index: 0),
         _buildTabItem(icon: AppImages.CALENDER, index: 1),
@@ -43,7 +44,7 @@ class CustomNavBar extends StatelessWidget {
         width: 28,
         color: currentIndex == index
             ? AppColors.primaryColor
-            : AppColors.primaryColor.withValues(alpha: 0.45),
+            : AppColors.neutral500,
       ),
       label: label,
     );

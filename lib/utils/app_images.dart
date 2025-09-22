@@ -18,4 +18,5 @@ class AppImages {
   static const String ROLE = "${ICON_PATH}role.png";
   static const String NOTES = "${ICON_PATH}notes.png";
   static const String LOCATION = "${ICON_PATH}location.png";
+  static const String PERSON = "${ICON_PATH}person.png";
 }

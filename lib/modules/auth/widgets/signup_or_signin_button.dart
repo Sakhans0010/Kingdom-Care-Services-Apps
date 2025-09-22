@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kingdom_care_services_app/constants/constants.dart';
 
 class SignUpOrSignInButton extends StatelessWidget {
   final String text;
@@ -15,21 +16,44 @@ class SignUpOrSignInButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(right: 16),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Text(text, style: Theme.of(context).textTheme.bodyMedium),
-          TextButton(
-            onPressed: () => onButtonTapped(),
-            child: Text(
-              buttonText,
-              style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                color: Theme.of(context).colorScheme.primary,
+      child:
+          // Signup link
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                text,
+                style: Theme.of(context).textTheme.bodySmall,
+                // TextStyle(fontSize: 14, color: AppColors.neutral500),
               ),
-            ),
+              TextButton(
+                onPressed: () => onButtonTapped(),
+                child: Text(
+                  buttonText,
+                  style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                    color: AppColors.primaryColor,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ],
           ),
-        ],
-      ),
+
+      // Row(
+      //   mainAxisAlignment: MainAxisAlignment.start,
+      //   children: [
+      //     Text(text, style: Theme.of(context).textTheme.bodyMedium),
+      //     TextButton(
+      //       onPressed: () => onButtonTapped(),
+      //       child: Text(
+      //         buttonText,
+      //         style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+      //           color: Theme.of(context).colorScheme.primary,
+      //         ),
+      //       ),
+      //     ),
+      //   ],
+      // ),
     );
   }
 }

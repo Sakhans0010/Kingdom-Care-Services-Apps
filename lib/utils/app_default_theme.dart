@@ -48,7 +48,7 @@ class AppThemes {
         error: Colors.red,
         onError: Colors.white,
         onTertiaryContainer: Colors.grey,
-        surface: AppColors.primaryColor,
+        surface: AppColors.secondaryBackground,
         onSurface: Colors.black,
       ),
       textTheme: const TextTheme(

@@ -137,7 +137,9 @@ class _DateTimelineState extends State<DateTimeline> {
         padding: const EdgeInsets.symmetric(horizontal: 12),
         width: widget.isHomeScreen ? 60 : 50,
         decoration: BoxDecoration(
-          color: isSelected ? AppColors.primaryContainerColor : null,
+          color: isSelected
+              ? AppColors.primaryColor.withValues(alpha: 0.23)
+              : null,
           borderRadius: BorderRadius.circular(12),
         ),
         child: Column(
@@ -149,8 +151,8 @@ class _DateTimelineState extends State<DateTimeline> {
                 fontSize: 18,
                 fontWeight: FontWeight.normal,
                 color: isSelected
-                    ? AppColors.primaryColor.withOpacity(0.6)
-                    : Colors.black.withOpacity(0.6),
+                    ? AppColors.textpPrimaryColor
+                    : Colors.black.withValues(alpha: .6),
               ),
             ),
             const SizedBox(height: 8),
@@ -159,7 +161,7 @@ class _DateTimelineState extends State<DateTimeline> {
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.w700,
-                color: isSelected ? AppColors.primaryColor : Colors.black,
+                color: isSelected ? AppColors.textpPrimaryColor : Colors.black,
               ),
             ),
           ],
