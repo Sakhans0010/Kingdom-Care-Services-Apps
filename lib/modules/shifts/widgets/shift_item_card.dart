@@ -42,8 +42,8 @@ class ShiftItemCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 // Left: Date
-                // _buildDateContainer(),
-                // const SizedBox(width: 12),
+                _buildDateContainer(),
+                const SizedBox(width: 12),
                 // // Right: details
                 Expanded(
                   child: Column(

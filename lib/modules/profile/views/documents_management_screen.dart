@@ -213,7 +213,6 @@ class DocumentRow extends StatelessWidget {
         icon = Icons.pending;
         break;
       case DocumentStatus.expired:
-      default:
         statusColor = AppColors.danger600;
         bgColor = AppColors.danger50;
         icon = Icons.error;
